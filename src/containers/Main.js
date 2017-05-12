@@ -9,7 +9,6 @@ import { get_events, event_to_edit, del_event } from '../actions.js'
 import history from '../history.js'
 
 function mapStateToProps(state) {
-	console.log(state.main.events)
 	return {
 		events : state.main.events,
 		totalCost : state.main.totalCost,

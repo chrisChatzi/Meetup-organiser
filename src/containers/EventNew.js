@@ -74,6 +74,9 @@ class EventNew extends Component {
 				document.getElementsByClassName("eventItem")[x].style.animation = anime
 			})(i)
 		}
+		document.getElementsByClassName("general")[0].style.animation = "slideUp 0.75s 1 forwards";
+		document.getElementById("total").style.animation = "slideLeft 0.75s 1 forwards";
+		document.getElementsByClassName("list")[0].style.animation = "slideDown 0.75s 1 forwards";
 	}
 
 	//go back

@@ -25488,6 +25488,48 @@ var Event = function Event(_ref) {
 			{ className: "left" },
 			_react2.default.createElement(
 				"div",
+				{ id: "total", className: "total" },
+				_react2.default.createElement(
+					"div",
+					{ className: "head" },
+					"Preview"
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "block" },
+						_react2.default.createElement(
+							"div",
+							{ className: "top" },
+							"Participants"
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "bot" },
+							state.participants.length
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "block" },
+						_react2.default.createElement(
+							"div",
+							{ className: "top" },
+							"Total cost"
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "bot" },
+							state.total,
+							" \u20AC"
+						)
+					)
+				)
+			),
+			_react2.default.createElement(
+				"div",
 				{ className: "general" },
 				_react2.default.createElement(
 					"div",
@@ -25532,7 +25574,7 @@ var Event = function Event(_ref) {
 							_react2.default.createElement(
 								"option",
 								{ value: "default" },
-								"Choose type"
+								"-- Choose type"
 							),
 							_react2.default.createElement(
 								"option",
@@ -25543,6 +25585,21 @@ var Event = function Event(_ref) {
 								"option",
 								{ value: "birthday" },
 								"Birthday"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "seminar" },
+								"Seminar"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "trade" },
+								"Trade show"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "awars" },
+								"Awards"
 							)
 						)
 					)
@@ -25579,48 +25636,6 @@ var Event = function Event(_ref) {
 							value: state.max, placeholder: "Min. 1", onChange: function onChange(e) {
 								return general(e, "max");
 							} })
-					)
-				)
-			),
-			_react2.default.createElement(
-				"div",
-				{ className: "total" },
-				_react2.default.createElement(
-					"div",
-					{ className: "head" },
-					"Preview"
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "row" },
-					_react2.default.createElement(
-						"div",
-						{ className: "block" },
-						_react2.default.createElement(
-							"div",
-							{ className: "top" },
-							"Participants"
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "bot" },
-							state.participants.length
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "block" },
-						_react2.default.createElement(
-							"div",
-							{ className: "top" },
-							"Total cost"
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "bot" },
-							state.total,
-							" \u20AC"
-						)
 					)
 				)
 			)
@@ -25707,7 +25722,7 @@ var Event = function Event(_ref) {
 				}) : _react2.default.createElement(
 					"div",
 					{ className: "row" },
-					"No participants yet"
+					"No participants added yet"
 				),
 				_react2.default.createElement(
 					"div",
@@ -25900,6 +25915,9 @@ var EventNew = function (_Component) {
 					document.getElementsByClassName("eventItem")[x].style.animation = anime;
 				})(i);
 			}
+			document.getElementsByClassName("general")[0].style.animation = "slideUp 0.75s 1 forwards";
+			document.getElementById("total").style.animation = "slideLeft 0.75s 1 forwards";
+			document.getElementsByClassName("list")[0].style.animation = "slideDown 0.75s 1 forwards";
 		}
 
 		//go back
@@ -26132,7 +26150,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 function mapStateToProps(state) {
-	console.log(state.main.events);
 	return {
 		events: state.main.events,
 		totalCost: state.main.totalCost

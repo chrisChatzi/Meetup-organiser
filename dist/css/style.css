@@ -55,21 +55,8 @@ input, select {
   box-sizing: border-box;
   box-sizing: border-box;
   background: #f2f2f5;
-  color: #242428;
+  color: #000;
   text-align: center; }
-
-textarea {
-  height: 7em;
-  display: inline-block;
-  vertical-align: middle;
-  font-family: 'christos', Serif;
-  resize: none;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  box-sizing: border-box;
-  background: #f2f2f5;
-  color: #242428; }
 
 select {
   margin: 0 2px; }
@@ -103,6 +90,24 @@ button {
   100% {
     transform: scale(1);
     opacity: 1; } }
+
+@keyframes slideLeft {
+  0% {
+    transform: translate(-50px); }
+  100% {
+    transform: translate(0); } }
+
+@keyframes slideDown {
+  0% {
+    transform: translate(0, -50px); }
+  100% {
+    transform: translate(0, 0); } }
+
+@keyframes slideUp {
+  0% {
+    transform: translate(0, 50px); }
+  100% {
+    transform: translate(0, 0); } }
 
 /*reused classes*/
 .headerClass, .main .header, .event .header {
@@ -140,9 +145,12 @@ button {
   padding: 0 10px;
   background: #fff;
   color: #242428;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25); }
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  cursor: pointer; }
   .main .eventItem:hover {
-    box-shadow: none; }
+    box-shadow: none;
+    border: 1px solid #ccc; }
   .main .eventItem .row {
     height: 40px;
     line-height: 40px; }
@@ -179,7 +187,8 @@ button {
 /*EVENT NEW*/
 .event .left {
   float: left;
-  width: 40%; }
+  width: 40%;
+  overflow: hidden; }
   .event .left .general {
     height: 250px;
     line-height: 250px;
@@ -224,7 +233,8 @@ button {
 
 .event .right {
   float: left;
-  width: 60%; }
+  width: 60%;
+  overflow: hidden; }
   .event .right .list {
     border: 1px solid #ccc;
     box-sizing: border-box;

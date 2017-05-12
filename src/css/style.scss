@@ -92,23 +92,13 @@ $font: 'christos', Serif;
 	 	-webkit-border-radius: 2px;
 	 	border-radius: 2px;
 		background: #666; 
-	}	
+	}
 	input, select{
 		@include setDims("", auto, 32px, 5px 0, 0 5px);
 		@include setBorders(4px, 1px solid #ddd);
 		box-sizing: border-box;
-		@include setColors(#242428, #f2f2f5);
+		@include setColors(#000, #f2f2f5);
 		text-align: center;
-	}
-	textarea{
-		height: 7em;
-		display:inline-block;
-		vertical-align:middle;
-		font-family: 'christos', Serif;
-		resize: none;
-		@include setBorders(4px, 1px solid #ddd);
-		box-sizing: border-box;
-		@include setColors(#242428, #f2f2f5);
 	}
 	select{
 		margin: 0 2px;
@@ -134,6 +124,19 @@ $font: 'christos', Serif;
 		50% { transform: scale(0.50); opacity: 1; }
 		75% { transform: scale(0.75); }
 		100% { transform: scale(1); opacity: 1;}
+	}
+	$slideNum : 50px;
+	@keyframes slideLeft{
+		0% { transform: translate(-$slideNum); }
+		100% { transform: translate(0); }
+	}
+	@keyframes slideDown{
+		0% { transform: translate(0, -$slideNum); }
+		100% { transform: translate(0, 0); }
+	}
+	@keyframes slideUp{
+		0% { transform: translate(0, $slideNum); }
+		100% { transform: translate(0, 0); }
 	}
 
 /*reused classes*/
@@ -166,8 +169,11 @@ $font: 'christos', Serif;
 			@include setDims(left, 31%, 110px, 10px 1%, 0 10px);
 			@include setColors(#242428, #fff);
 			box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
+			box-sizing: border-box;
+			cursor: pointer;
 			&:hover{
 				box-shadow: none;
+				border: 1px solid #ccc;
 			}
 			.row{ @include setHeight(40px); }
 			.name{
@@ -207,6 +213,7 @@ $font: 'christos', Serif;
 		.left{
 			float: left;
 			width: 40%;
+			overflow: hidden;
 			.general{
 				@include setHeight(250px);
 				padding-bottom: 10px;
@@ -260,6 +267,7 @@ $font: 'christos', Serif;
 		.right{
 			float: left;
 			width: 60%;
+			overflow: hidden;
 			.list{
 				@include setBorders("", 1px solid #ccc);
 				background: #fff;

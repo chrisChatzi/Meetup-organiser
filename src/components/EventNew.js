@@ -17,6 +17,20 @@ const Event = ( { state, goBack, save, general, add,
 		</div>
 	{/*left side - name fee etc.*/}
 		<div className="left">
+		{/*review*/}
+			<div id="total" className="total">
+				<div className="head">Preview</div>
+				<div className="row">
+					<div className="block">
+						<div className="top">Participants</div>
+						<div className="bot">{state.participants.length}</div>
+					</div>
+					<div className="block">
+						<div className="top">Total cost</div>
+						<div className="bot">{state.total} &euro;</div>
+					</div>
+				</div>
+			</div>
 		{/*general info*/}
 			<div className="general">
 				<div className="head">General info</div>
@@ -33,9 +47,12 @@ const Event = ( { state, goBack, save, general, add,
 					<div className="val">
 						<select className={(state.typeCheck) ? "error" : ""}
 							defaultValue={state.type}  onChange={(e)=>general(e, "type")}>
-							<option value="default">Choose type</option>
+							<option value="default">-- Choose type</option>
 							<option value="meeting">Meeting</option>
 							<option value="birthday">Birthday</option>
+							<option value="seminar">Seminar</option>
+							<option value="trade">Trade show</option>
+							<option value="awars">Awards</option>
 						</select>
 					</div>
 				</div>
@@ -51,20 +68,6 @@ const Event = ( { state, goBack, save, general, add,
 					<div className="val">
 						<input className={(state.maxCheck) ? "error" : ""}
 							value={state.max} placeholder="Min. 1" onChange={(e)=>general(e, "max")}/>
-					</div>
-				</div>
-			</div>
-		{/*review*/}
-			<div className="total">
-				<div className="head">Preview</div>
-				<div className="row">
-					<div className="block">
-						<div className="top">Participants</div>
-						<div className="bot">{state.participants.length}</div>
-					</div>
-					<div className="block">
-						<div className="top">Total cost</div>
-						<div className="bot">{state.total} &euro;</div>
 					</div>
 				</div>
 			</div>
@@ -98,7 +101,7 @@ const Event = ( { state, goBack, save, general, add,
 							<i className="fa fa-trash"></i>
 						</div>
 					</div>
-				) : <div className="row">No participants yet</div>}
+				) : <div className="row">No participants added yet</div>}
 			{/*table add new row*/}
 				<div className="row">
 					<button onClick={add}>Add participant</button>
