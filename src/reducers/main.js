@@ -20,6 +20,16 @@ const state_update = (state = init.main, action) => {
 			newstate.path = action.path
 			return newstate
 		}
+		case "EDIT_EVENT": {
+			let array = newstate.events;
+			let idx = 0;
+			for(let i=0; i<array.length; i++){
+				if(array[i].name == action.event.name) idx = i
+			}
+			array[idx] = action.event;
+			history.push("/")
+			return newstate
+		}
 		case "EVENT_EDIT": {
 			newstate.eventOnEdit = action.event;
 			history.push("/event");

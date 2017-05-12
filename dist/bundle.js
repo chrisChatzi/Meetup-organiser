@@ -25349,7 +25349,7 @@ module.exports = warning;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.event_to_edit = exports.add_event = undefined;
+exports.event_to_edit = exports.edit_event = exports.add_event = undefined;
 
 require("./general/logic.js");
 
@@ -25357,6 +25357,13 @@ require("./general/logic.js");
 var add_event = exports.add_event = function add_event(event) {
     return {
         type: "ADD_EVENT",
+        event: event
+    };
+};
+//edit event
+var edit_event = exports.edit_event = function edit_event(event) {
+    return {
+        type: "EDIT_EVENT",
         event: event
     };
 };
@@ -25812,8 +25819,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		saveEvent: function saveEvent(event) {
-			dispatch((0, _actions.add_event)(event));
+		saveEvent: function saveEvent(event, flag) {
+			if (flag) dispatch((0, _actions.edit_event)(event));else dispatch((0, _actions.add_event)(event));
 		}
 	};
 }
@@ -25834,16 +25841,15 @@ var EventNew = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (EventNew.__proto__ || Object.getPrototypeOf(EventNew)).call(this, props));
 
 		var flag = _this.props.eventOnEdit.name ? true : false;
-		console.log(flag);
-		console.log(_this.props.eventOnEdit);
+		var edit = flag;
 		var name = flag ? _this.props.eventOnEdit.name : "";
 		var type = flag ? _this.props.eventOnEdit.type : "default";
 		var fee = flag ? _this.props.eventOnEdit.fee : "";
 		var max = flag ? _this.props.eventOnEdit.max : "";
 		var participants = flag ? _this.props.eventOnEdit.participants : [];
-		// console.log(participants)
 		var total = flag ? _this.props.eventOnEdit.total : 0;
 		_this.state = {
+			edit: edit,
 			name: name,
 			type: type,
 			fee: fee,
@@ -25933,7 +25939,7 @@ var EventNew = function (_Component) {
 				total: this.state.total
 			};
 			if (!error) {
-				this.props.saveEvent(obj);
+				this.props.saveEvent(obj, this.state.edit);
 			}
 		}
 
@@ -26313,6 +26319,17 @@ var state_update = function state_update() {
 					_history2.default.push("/");
 				}
 				newstate.path = action.path;
+				return newstate;
+			}
+		case "EDIT_EVENT":
+			{
+				var _array = newstate.events;
+				var idx = 0;
+				for (var _i = 0; _i < _array.length; _i++) {
+					if (_array[_i].name == action.event.name) idx = _i;
+				}
+				_array[idx] = action.event;
+				_history2.default.push("/");
 				return newstate;
 			}
 		case "EVENT_EDIT":

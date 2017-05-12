@@ -5,7 +5,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import EventC from '../components/EventNew.js'
-import { add_event } from '../actions.js'
+import { add_event, edit_event } from '../actions.js'
 import history from '../history.js'
 
 function mapStateToProps(state) {
@@ -16,8 +16,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		saveEvent: (event) => {
-			dispatch(add_event(event))
+		saveEvent: (event, flag) => {
+			if(flag) dispatch(edit_event(event))
+			else dispatch(add_event(event))
 		},
 	};
 }
@@ -31,17 +32,17 @@ class EventNew extends Component {
 
 	constructor(props) {
 		super(props);
+
 		let flag = (this.props.eventOnEdit.name) ? true : false;
-		console.log(flag)
-		console.log(this.props.eventOnEdit)
+		let edit = flag;
 		let name = (flag) ? this.props.eventOnEdit.name : "";
 		let type = (flag) ? this.props.eventOnEdit.type : "default";
 		let fee = (flag) ? this.props.eventOnEdit.fee : "";
 		let max = (flag) ? this.props.eventOnEdit.max : "";
 		let participants = (flag) ? this.props.eventOnEdit.participants : [];
-		// console.log(participants)
 		let total = (flag) ? this.props.eventOnEdit.total : 0;
 		this.state = {
+			edit,
 			name,
 			type,
 			fee,
@@ -124,7 +125,7 @@ class EventNew extends Component {
 			total : this.state.total
 		}
 		if(!error){
-			this.props.saveEvent(obj)
+			this.props.saveEvent(obj, this.state.edit)
 		}
 	}
 
