@@ -25349,7 +25349,7 @@ module.exports = warning;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.event_to_edit = exports.edit_event = exports.add_event = undefined;
+exports.event_to_edit = exports.del_event = exports.edit_event = exports.add_event = undefined;
 
 require("./general/logic.js");
 
@@ -25364,6 +25364,13 @@ var add_event = exports.add_event = function add_event(event) {
 var edit_event = exports.edit_event = function edit_event(event) {
     return {
         type: "EDIT_EVENT",
+        event: event
+    };
+};
+//delete event
+var del_event = exports.del_event = function del_event(event) {
+    return {
+        type: "DELETE_EVENT",
         event: event
     };
 };
@@ -25390,7 +25397,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var EventItem = function EventItem(_ref) {
 	var event = _ref.event,
-	    open = _ref.open;
+	    open = _ref.open,
+	    del = _ref.del;
 	return _react2.default.createElement(
 		"div",
 		{ className: "eventItem", onClick: open },
@@ -25414,6 +25422,11 @@ var EventItem = function EventItem(_ref) {
 			{ className: "row total" },
 			event.total,
 			" \u20AC"
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "row delete", onClick: del },
+			_react2.default.createElement("i", { className: "fa fa-trash delete" })
 		)
 	);
 };
@@ -25732,10 +25745,12 @@ var _EventItem2 = _interopRequireDefault(_EventItem);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Main = function Main(_ref) {
-	var events = _ref.events,
+	var state = _ref.state,
+	    events = _ref.events,
 	    totalCost = _ref.totalCost,
 	    createEvent = _ref.createEvent,
-	    clickEvent = _ref.clickEvent;
+	    clickEvent = _ref.clickEvent,
+	    delEvent = _ref.delEvent;
 	return _react2.default.createElement(
 		'div',
 		{ className: 'main' },
@@ -25759,12 +25774,15 @@ var Main = function Main(_ref) {
 			_react2.default.createElement(
 				'div',
 				{ className: 'total item' },
-				"Total cost: " + totalCost
+				"Total cost: " + totalCost,
+				' \u20AC'
 			)
 		),
 		events.length > 0 ? events.map(function (v, i) {
-			return _react2.default.createElement(_EventItem2.default, { event: v, open: function open() {
-					return clickEvent(i);
+			return _react2.default.createElement(_EventItem2.default, { event: v, open: function open(e) {
+					return clickEvent(e, i);
+				}, del: function del() {
+					return delEvent(i);
 				}, key: i });
 		}) : _react2.default.createElement(
 			'div',
@@ -26111,6 +26129,9 @@ function mapDispatchToProps(dispatch) {
 	return {
 		clickEvent: function clickEvent(event) {
 			dispatch((0, _actions.event_to_edit)(event));
+		},
+		delEvent: function delEvent(event) {
+			dispatch((0, _actions.del_event)(event));
 		}
 	};
 }
@@ -26132,21 +26153,33 @@ var Main = function (_Component) {
 
 		_this.createEvent = _this.createEventHandler.bind(_this);
 		_this.clickEvent = _this.clickEventHandler.bind(_this);
+		_this.delEvent = _this.delEventHandler.bind(_this);
 		return _this;
 	}
 
 	_createClass(Main, [{
 		key: 'componentDidMount',
 		value: function componentDidMount(e) {}
+		//create new event
+
 	}, {
 		key: 'createEventHandler',
 		value: function createEventHandler() {
 			_history2.default.push("/event");
 		}
+		//click ono event to edit
+
 	}, {
 		key: 'clickEventHandler',
-		value: function clickEventHandler(i) {
-			this.props.clickEvent(this.props.events[i]);
+		value: function clickEventHandler(e, i) {
+			if (e.target.className.indexOf("delete") < 0) this.props.clickEvent(this.props.events[i]);
+		}
+		//delete event
+
+	}, {
+		key: 'delEventHandler',
+		value: function delEventHandler(i) {
+			this.props.delEvent(this.props.events[i]);
 		}
 	}, {
 		key: 'render',
@@ -26155,14 +26188,15 @@ var Main = function (_Component) {
 			    events = _props.events,
 			    totalCost = _props.totalCost;
 			var createEvent = this.createEvent,
-			    clickEvent = this.clickEvent;
+			    clickEvent = this.clickEvent,
+			    delEvent = this.delEvent;
 
 
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_Main2.default, { events: events, totalCost: totalCost,
-					createEvent: createEvent, clickEvent: clickEvent })
+				_react2.default.createElement(_Main2.default, { state: this.state, events: events, totalCost: totalCost,
+					createEvent: createEvent, clickEvent: clickEvent, delEvent: delEvent })
 			);
 		}
 	}]);
@@ -26316,9 +26350,10 @@ var state_update = function state_update() {
 				}
 				if (!error) {
 					array.push(action.event);
+					newstate.totalCost += action.event.total;
+					newstate.events = array;
 					_history2.default.push("/");
 				}
-				newstate.path = action.path;
 				return newstate;
 			}
 		case "EDIT_EVENT":
@@ -26329,6 +26364,19 @@ var state_update = function state_update() {
 					if (_array[_i].name == action.event.name) idx = _i;
 				}
 				_array[idx] = action.event;
+				_history2.default.push("/");
+				return newstate;
+			}
+		case "DELETE_EVENT":
+			{
+				var _array2 = newstate.events.slice();
+				var _idx = 0;
+				for (var _i2 = 0; _i2 < _array2.length; _i2++) {
+					if (_array2[_i2].name == action.event.name) _idx = _i2;
+				}
+				newstate.totalCost -= action.event.total;
+				_array2.splice(_idx, 1);
+				newstate.events = _array2;
 				_history2.default.push("/");
 				return newstate;
 			}

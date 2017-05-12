@@ -15,9 +15,10 @@ const state_update = (state = init.main, action) => {
 			}
 			if(!error){
 				array.push(action.event);
+				newstate.totalCost += action.event.total;
+				newstate.events = array
 				history.push("/")
 			}
-			newstate.path = action.path
 			return newstate
 		}
 		case "EDIT_EVENT": {
@@ -27,6 +28,18 @@ const state_update = (state = init.main, action) => {
 				if(array[i].name == action.event.name) idx = i
 			}
 			array[idx] = action.event;
+			history.push("/")
+			return newstate
+		}
+		case "DELETE_EVENT": {
+			let array = newstate.events.slice();
+			let idx = 0;
+			for(let i=0; i<array.length; i++){
+				if(array[i].name == action.event.name) idx = i
+			}
+			newstate.totalCost -= action.event.total;
+			array.splice(idx, 1);
+			newstate.events = array;
 			history.push("/")
 			return newstate
 		}

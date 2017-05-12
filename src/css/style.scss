@@ -150,19 +150,26 @@ $font: 'christos', Serif;
 		}
 		.none{ margin: 20px 0; }
 		.eventItem{
-			@include setDims(left, 31%, 130px, 10px 1%, 5px 10px);
+			@include setDims(left, 31%, 110px, 10px 1%, 0 10px);
 			border: 1px solid #ccc;
 			box-sizing: border-box;
 			.row{ @include setHeight(40px); }
 			.name{
-				
+				/*@include setHeight()*/
 			}
 			.type{
+				@include setHeight(30px);
 				color: #777;
 			}
-			.part, .total{
+			.part, .total, delete{
 				float: left;
-				width: 50%;
+				width: 33.3%;
+			}
+			@media (max-width: 900px){
+				width: 48%;
+			}
+			@media (max-width: 600px){
+				width: 98%;
 			}
 		}
 	}

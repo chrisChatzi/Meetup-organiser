@@ -14,6 +14,13 @@ export const edit_event = (event) => {
         event
     };
 };
+//delete event
+export const del_event = (event) => {
+    return {
+        type: "DELETE_EVENT",
+        event
+    };
+};
 //event to edit
 export const event_to_edit = (event) => {
     return {

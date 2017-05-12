@@ -106,20 +106,30 @@ button {
 .main .eventItem {
   float: left;
   width: 31%;
-  height: 130px;
-  line-height: 130px;
+  height: 110px;
+  line-height: 110px;
   margin: 10px 1%;
-  padding: 5px 10px;
+  padding: 0 10px;
   border: 1px solid #ccc;
   box-sizing: border-box; }
   .main .eventItem .row {
     height: 40px;
     line-height: 40px; }
+  .main .eventItem .name {
+    /*@include setHeight()*/ }
   .main .eventItem .type {
+    height: 30px;
+    line-height: 30px;
     color: #777; }
-  .main .eventItem .part, .main .eventItem .total {
+  .main .eventItem .part, .main .eventItem .total, .main .eventItem delete {
     float: left;
-    width: 50%; }
+    width: 33.3%; }
+  @media (max-width: 900px) {
+    .main .eventItem {
+      width: 48%; } }
+  @media (max-width: 600px) {
+    .main .eventItem {
+      width: 98%; } }
 
 /*EVENT NEW*/
 .event .header {
