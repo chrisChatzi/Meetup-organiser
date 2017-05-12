@@ -169,6 +169,14 @@ $font: 'christos', Serif;
 
 /*EVENT NEW*/
 	.event{
+		.header{
+			@include setDims("", 100%, 50px, "", "");
+			border-bottom: 1px solid #ccc;
+			.item{
+				float: left;
+				width: 33%;
+			}
+		}
 		.left{
 			float: left;
 			width: 40%;
@@ -193,6 +201,9 @@ $font: 'christos', Serif;
 					.val{
 						float: left;
 						width: 60%;
+					}
+					.error{
+						background: #fcc;
 					}
 				}
 			}
@@ -235,10 +246,16 @@ $font: 'christos', Serif;
 					box-sizing: border-box;
 					font-weight: 500px;
 				}
+				.rowHead{
+					font-weight: bold;
+					border-bottom: 1px solid #ddd;
+					box-sizing: border-box;
+				}
 				.row{
 					@include setHeight(50px);
-					.name{ float: left; width: 40%; }
-					.guests{ float: left; width: 25%; }
+					.index{ float: left; width: 5%; }
+					.name{ float: left; width: 45%; }
+					.guests{ float: left; width: 15%; input{width: 80px;} }
 					.total{ float: left; width: 25%; }
 					.delete{ float: left; width: 10%; }
 				}

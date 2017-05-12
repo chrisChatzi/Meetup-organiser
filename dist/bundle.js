@@ -25417,10 +25417,44 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Event = function Event(_ref) {
-	var state = _ref.state;
+	var state = _ref.state,
+	    goBack = _ref.goBack,
+	    save = _ref.save,
+	    general = _ref.general,
+	    add = _ref.add,
+	    partName = _ref.partName,
+	    partGuests = _ref.partGuests,
+	    partDel = _ref.partDel;
 	return _react2.default.createElement(
 		"div",
 		{ className: "event" },
+		_react2.default.createElement(
+			"div",
+			{ className: "header" },
+			_react2.default.createElement(
+				"div",
+				{ className: "num item" },
+				_react2.default.createElement(
+					"button",
+					{ onClick: goBack },
+					"Back"
+				)
+			),
+			_react2.default.createElement(
+				"div",
+				{ className: "new item" },
+				"\xA0"
+			),
+			_react2.default.createElement(
+				"div",
+				{ className: "total item" },
+				_react2.default.createElement(
+					"button",
+					{ onClick: save },
+					"Save"
+				)
+			)
+		),
 		_react2.default.createElement(
 			"div",
 			{ className: "left" },
@@ -25443,7 +25477,10 @@ var Event = function Event(_ref) {
 					_react2.default.createElement(
 						"div",
 						{ className: "val" },
-						_react2.default.createElement("input", { value: state.name, placeholder: "Name of event" })
+						_react2.default.createElement("input", { value: state.name, placeholder: "Name of event",
+							onChange: function onChange(e) {
+								return general(e, "name");
+							} })
 					)
 				),
 				_react2.default.createElement(
@@ -25459,7 +25496,9 @@ var Event = function Event(_ref) {
 						{ className: "val" },
 						_react2.default.createElement(
 							"select",
-							{ defaultValue: state.type },
+							{ defaultValue: state.type, onChange: function onChange(e) {
+									return general(e, "type");
+								} },
 							_react2.default.createElement(
 								"option",
 								{ value: "default" },
@@ -25489,7 +25528,10 @@ var Event = function Event(_ref) {
 					_react2.default.createElement(
 						"div",
 						{ className: "val" },
-						_react2.default.createElement("input", { value: state.fee, placeholder: "Min. 1" })
+						_react2.default.createElement("input", { className: state.feeCheck ? "error" : "",
+							value: state.fee, placeholder: "Min. 1", onChange: function onChange(e) {
+								return general(e, "fee");
+							} })
 					)
 				),
 				_react2.default.createElement(
@@ -25503,7 +25545,10 @@ var Event = function Event(_ref) {
 					_react2.default.createElement(
 						"div",
 						{ className: "val" },
-						_react2.default.createElement("input", { value: state.max, placeholder: "Min. 1" })
+						_react2.default.createElement("input", { className: state.maxCheck ? "error" : "",
+							value: state.max, placeholder: "Min. 1", onChange: function onChange(e) {
+								return general(e, "max");
+							} })
 					)
 				)
 			),
@@ -25543,7 +25588,8 @@ var Event = function Event(_ref) {
 						_react2.default.createElement(
 							"div",
 							{ className: "bot" },
-							state.total
+							state.total,
+							" \u20AC"
 						)
 					)
 				)
@@ -25560,28 +25606,69 @@ var Event = function Event(_ref) {
 					{ className: "head" },
 					"Participants"
 				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row rowHead" },
+					_react2.default.createElement(
+						"div",
+						{ className: "index" },
+						"#"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "name" },
+						"Name"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "guests" },
+						"Guests"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "total" },
+						"Total"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "delete" },
+						"Del"
+					)
+				),
 				state.participants.length > 0 ? state.participants.map(function (v, i) {
 					return _react2.default.createElement(
 						"div",
 						{ className: "row", key: i },
 						_react2.default.createElement(
 							"div",
+							{ className: "index" },
+							i + 1
+						),
+						_react2.default.createElement(
+							"div",
 							{ className: "name" },
-							_react2.default.createElement("input", { value: v.name })
+							_react2.default.createElement("input", { value: v.name, placeholder: "Name", onChange: function onChange(e) {
+									return partName(e, i);
+								} })
 						),
 						_react2.default.createElement(
 							"div",
 							{ className: "guests" },
-							_react2.default.createElement("input", { value: v.guests })
+							_react2.default.createElement("input", { value: v.guests, placeholder: "Guests", onChange: function onChange(e) {
+									return partGuests(e, i);
+								} })
 						),
 						_react2.default.createElement(
 							"div",
 							{ className: "total" },
-							v.total
+							v.total,
+							" \u20AC"
 						),
 						_react2.default.createElement(
 							"div",
-							{ className: "delete" },
+							{ className: "delete", onClick: function onClick() {
+									return partDel(i);
+								} },
 							_react2.default.createElement("i", { className: "fa fa-trash" })
 						)
 					);
@@ -25595,7 +25682,7 @@ var Event = function Event(_ref) {
 					{ className: "row" },
 					_react2.default.createElement(
 						"button",
-						null,
+						{ onClick: add },
 						"Add participant"
 					)
 				)
@@ -25752,21 +25839,113 @@ var EventNew = function (_Component) {
 			fee: fee,
 			max: max,
 			participants: participants,
-			total: total
+			total: total,
+			nameCheck: false,
+			typeCheck: false,
+			feeCheck: false,
+			maxCheck: false
 		};
+
+		_this.general = _this.generalHandler.bind(_this);
+		_this.add = _this.addHandler.bind(_this);
+		_this.partName = _this.partNameHandler.bind(_this);
+		_this.partGuests = _this.partGuestsHandler.bind(_this);
+		_this.partDel = _this.partDelHandler.bind(_this);
 		return _this;
 	}
 
 	_createClass(EventNew, [{
 		key: 'componentDidMount',
 		value: function componentDidMount(e) {}
+		//general info inputs change
+
+	}, {
+		key: 'generalHandler',
+		value: function generalHandler(e, type) {
+			var arr = this.state.participants;
+			var total = 0;
+			switch (type) {
+				case "name":
+					this.setState({ name: e.target.value });break;
+				case "type":
+					this.setState({ type: e.target.value });break;
+				case "fee":
+					if (isNaN(e.target.value)) this.setState({ fee: e.target.value, feeCheck: true });else this.setState({ fee: e.target.value, feeCheck: false });
+					//calculate cost for each participant (fee*guests) and total cost
+					for (var i = 0; i < arr.length; i++) {
+						arr[i].total = e.target.value * arr[i].guests;
+						total += arr[i].total;
+					}
+					this.setState({ participants: arr, total: total });
+					break;
+				case "max":
+					if (isNaN(e.target.value)) this.setState({ max: e.target.value, maxCheck: true });else this.setState({ max: e.target.value, maxCheck: false });
+					break;
+			}
+		}
+		//add participant
+
+	}, {
+		key: 'addHandler',
+		value: function addHandler() {
+			var arr = this.state.participants;
+			arr.push({ name: "", guests: "", total: 0 });
+			this.setState({ participants: arr });
+		}
+		//change name of participant
+
+	}, {
+		key: 'partNameHandler',
+		value: function partNameHandler(e, i) {
+			var arr = this.state.participants;
+			arr[i].name = e.target.value;
+			this.setState({ participants: arr });
+		}
+		//change number of guests for participant
+
+	}, {
+		key: 'partGuestsHandler',
+		value: function partGuestsHandler(e, i) {
+			var arr = this.state.participants;
+			arr[i].guests = e.target.value;
+			arr[i].total = this.state.fee * e.target.value;
+			this.setState({ participants: arr });
+			//calculate total cost of event
+			var total = 0;
+			for (var _i = 0; _i < arr.length; _i++) {
+				total += arr[_i].total;
+			}this.setState({ total: total });
+		}
+		//delete participant
+
+	}, {
+		key: 'partDelHandler',
+		value: function partDelHandler(i) {
+			var arr = this.state.participants;
+			arr.splice(i, 1);
+			this.setState({ participants: arr });
+			//calculate total cost of event
+			var total = 0;
+			for (var _i2 = 0; _i2 < arr.length; _i2++) {
+				total += arr[_i2].total;
+			}this.setState({ total: total });
+		}
 	}, {
 		key: 'render',
 		value: function render() {
+			var general = this.general,
+			    add = this.add,
+			    partName = this.partName,
+			    partGuests = this.partGuests,
+			    partDel = this.partDel;
+
+
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_EventNew2.default, { state: this.state })
+				_react2.default.createElement(_EventNew2.default, { state: this.state,
+					general: general, add: add,
+					partName: partName, partGuests: partGuests, partDel: partDel })
 			);
 		}
 	}]);

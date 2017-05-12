@@ -122,6 +122,15 @@ button {
     width: 50%; }
 
 /*EVENT NEW*/
+.event .header {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #ccc; }
+  .event .header .item {
+    float: left;
+    width: 33%; }
+
 .event .left {
   float: left;
   width: 40%; }
@@ -148,6 +157,8 @@ button {
       .event .left .general .row .val {
         float: left;
         width: 60%; }
+      .event .left .general .row .error {
+        background: #fcc; }
   .event .left .total {
     height: 105px;
     line-height: 105px;
@@ -188,15 +199,24 @@ button {
       border-bottom: 1px solid #ccc;
       box-sizing: border-box;
       font-weight: 500px; }
+    .event .right .list .rowHead {
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+      box-sizing: border-box; }
     .event .right .list .row {
       height: 50px;
       line-height: 50px; }
+      .event .right .list .row .index {
+        float: left;
+        width: 5%; }
       .event .right .list .row .name {
         float: left;
-        width: 40%; }
+        width: 45%; }
       .event .right .list .row .guests {
         float: left;
-        width: 25%; }
+        width: 15%; }
+        .event .right .list .row .guests input {
+          width: 80px; }
       .event .right .list .row .total {
         float: left;
         width: 25%; }

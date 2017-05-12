@@ -45,18 +45,90 @@ class EventNew extends Component {
 			fee,
 			max,
 			participants,
-			total
-		}
+			total,
+			nameCheck : false,
+			typeCheck : false,
+			feeCheck : false,
+			maxCheck : false
+		};
+
+		this.general = this.generalHandler.bind(this);
+		this.add = this.addHandler.bind(this);
+		this.partName = this.partNameHandler.bind(this);
+		this.partGuests = this.partGuestsHandler.bind(this);
+		this.partDel = this.partDelHandler.bind(this);
 	}
 
 	componentDidMount(e) {
 
 	}
+	//general info inputs change
+	generalHandler(e, type){
+		let arr = this.state.participants;
+		let total = 0;
+		switch(type){
+			case "name": this.setState({name : e.target.value}); break;
+			case "type": this.setState({type : e.target.value}); break;
+			case "fee": 
+				if(isNaN(e.target.value)) this.setState({fee : e.target.value, feeCheck : true})
+				else this.setState({fee : e.target.value, feeCheck : false});
+				//calculate cost for each participant (fee*guests) and total cost
+					for(let i=0; i<arr.length; i++){
+						arr[i].total = e.target.value * arr[i].guests;
+						total += arr[i].total;
+					}
+					this.setState({participants : arr, total});
+			break;
+			case "max": 
+				if(isNaN(e.target.value)) this.setState({max : e.target.value, maxCheck : true})
+				else this.setState({max : e.target.value, maxCheck : false}); 
+			break;
+		}
+	}
+	//add participant
+	addHandler(){
+		let arr = this.state.participants;
+		arr.push({name:"",guests:"",total:0});
+		this.setState({participants : arr});
+	}
+	//change name of participant
+	partNameHandler(e, i){
+		let arr = this.state.participants;
+		arr[i].name = e.target.value;
+		this.setState({participants : arr});
+	}
+	//change number of guests for participant
+	partGuestsHandler(e, i){
+		let arr = this.state.participants;
+		arr[i].guests = e.target.value;
+		arr[i].total = this.state.fee * e.target.value;
+		this.setState({participants : arr});
+		//calculate total cost of event
+		let total = 0;
+		for(let i=0; i<arr.length; i++)
+			total += arr[i].total;
+		this.setState({total});
+	}
+	//delete participant
+	partDelHandler(i){
+		let arr = this.state.participants;
+		arr.splice(i, 1);
+		this.setState({participants : arr});
+		//calculate total cost of event
+		let total = 0;
+		for(let i=0; i<arr.length; i++)
+			total += arr[i].total;
+		this.setState({total});
+	}
 
-	render() {	
+	render() {
+		let { general, add, partName, partGuests, partDel } = this
+
 		return (
 			<div>
-				<EventC state={this.state} />
+				<EventC state={this.state}
+					general={general} add={add}
+					partName={partName} partGuests={partGuests} partDel={partDel} />
 			</div>
 		)
 	}
