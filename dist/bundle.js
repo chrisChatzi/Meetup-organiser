@@ -25416,11 +25416,191 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Event = function Event() {
+var Event = function Event(_ref) {
+	var state = _ref.state;
 	return _react2.default.createElement(
 		"div",
 		{ className: "event" },
-		"event"
+		_react2.default.createElement(
+			"div",
+			{ className: "left" },
+			_react2.default.createElement(
+				"div",
+				{ className: "general" },
+				_react2.default.createElement(
+					"div",
+					{ className: "head" },
+					"General info"
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "label" },
+						"Name"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "val" },
+						_react2.default.createElement("input", { value: state.name, placeholder: "Name of event" })
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "label" },
+						"Type"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "val" },
+						_react2.default.createElement(
+							"select",
+							{ defaultValue: state.type },
+							_react2.default.createElement(
+								"option",
+								{ value: "default" },
+								"Choose type"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "meeting" },
+								"Meeting"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "birthday" },
+								"Birthday"
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "label" },
+						"Participation fee"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "val" },
+						_react2.default.createElement("input", { value: state.fee, placeholder: "Min. 1" })
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "label" },
+						"Max participants"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "val" },
+						_react2.default.createElement("input", { value: state.max, placeholder: "Min. 1" })
+					)
+				)
+			),
+			_react2.default.createElement(
+				"div",
+				{ className: "total" },
+				_react2.default.createElement(
+					"div",
+					{ className: "head" },
+					"Preview"
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "block" },
+						_react2.default.createElement(
+							"div",
+							{ className: "top" },
+							"Participants"
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "bot" },
+							state.participants.length
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "block" },
+						_react2.default.createElement(
+							"div",
+							{ className: "top" },
+							"Total cost"
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "bot" },
+							state.total
+						)
+					)
+				)
+			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "right" },
+			_react2.default.createElement(
+				"div",
+				{ className: "list" },
+				_react2.default.createElement(
+					"div",
+					{ className: "head" },
+					"Participants"
+				),
+				state.participants.length > 0 ? state.participants.map(function (v, i) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "row", key: i },
+						_react2.default.createElement(
+							"div",
+							{ className: "name" },
+							_react2.default.createElement("input", { value: v.name })
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "guests" },
+							_react2.default.createElement("input", { value: v.guests })
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "total" },
+							v.total
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "delete" },
+							_react2.default.createElement("i", { className: "fa fa-trash" })
+						)
+					);
+				}) : _react2.default.createElement(
+					"div",
+					{ className: "row" },
+					"No participants yet"
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"button",
+						null,
+						"Add participant"
+					)
+				)
+			)
+		)
 	);
 };
 
@@ -25521,7 +25701,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 function mapStateToProps(state) {
-	return {};
+	return {
+		edit: state.main.eventOnEdit
+	};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -25556,7 +25738,23 @@ var EventNew = function (_Component) {
 	function EventNew(props) {
 		_classCallCheck(this, EventNew);
 
-		return _possibleConstructorReturn(this, (EventNew.__proto__ || Object.getPrototypeOf(EventNew)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (EventNew.__proto__ || Object.getPrototypeOf(EventNew)).call(this, props));
+
+		var name = _this.props.eventOnEdit ? _this.props.eventOnEdit.name : "";
+		var type = _this.props.eventOnEdit ? _this.props.eventOnEdit.type : "default";
+		var fee = _this.props.eventOnEdit ? _this.props.eventOnEdit.fee : "";
+		var max = _this.props.eventOnEdit ? _this.props.eventOnEdit.max : "";
+		var participants = _this.props.eventOnEdit ? _this.props.eventOnEdit.participants : [];
+		var total = _this.props.eventOnEdit ? _this.props.eventOnEdit.total : 0;
+		_this.state = {
+			name: name,
+			type: type,
+			fee: fee,
+			max: max,
+			participants: participants,
+			total: total
+		};
+		return _this;
 	}
 
 	_createClass(EventNew, [{
@@ -25568,7 +25766,7 @@ var EventNew = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_EventNew2.default, null)
+				_react2.default.createElement(_EventNew2.default, { state: this.state })
 			);
 		}
 	}]);
@@ -25771,7 +25969,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var main = {
 	events: [], //array of events
-	totalCost: 0 };
+	totalCost: 0, //total cost of all events
+	eventOnEdit: {} };
 
 exports.default = { main: main };
 

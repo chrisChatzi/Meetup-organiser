@@ -28,6 +28,7 @@ $font: 'christos', Serif;
 	@mixin setBorders($radius, $border){
 		@if $radius != "" { border-radius: $radius; }
 		@if $border != "" { border: $border; }
+		box-sizing: border-box;
 	}
 	/*set element hover*/
 	@mixin setHover($trans, $color, $back){
@@ -163,5 +164,87 @@ $font: 'christos', Serif;
 				float: left;
 				width: 50%;
 			}
+		}
+	}
+
+/*EVENT NEW*/
+	.event{
+		.left{
+			float: left;
+			width: 40%;
+			.general{
+				@include setHeight(250px);
+				padding-bottom: 10px;
+				@include setBorders("", 1px solid #ccc);
+				width: 98%;
+				margin: 10px 1%;
+				.head{
+					@include setHeight(40px);
+					border-bottom: 1px solid #ccc;
+					box-sizing: border-box;
+					font-weight: 500px;
+				}
+				.row{
+					@include setHeight(50px);
+					.label{
+						float: left;
+						width: 40%;
+					}
+					.val{
+						float: left;
+						width: 60%;
+					}
+				}
+			}
+			.total{
+				@include setHeight(105px);
+				@include setBorders("", 1px solid #ccc);
+				width: 98%;
+				margin: 10px 1%;
+				.head{
+					@include setHeight(40px);
+					border-bottom: 1px solid #ccc;
+					box-sizing: border-box;
+					font-weight: 500px;
+				}
+				.row{
+					@include setHeight(60px);
+					.block{
+						float: left;
+						width: 50%;
+						.top{
+							@include setHeight(25px);
+						}
+						.bot{
+							@include setHeight(35px);
+						}
+					}
+				}
+			}
+		}
+		.right{
+			float: left;
+			width: 60%;
+			.list{
+				@include setBorders("", 1px solid #ccc);
+				width: 98%;
+				margin: 10px 1%;
+				.head{
+					@include setHeight(40px);
+					border-bottom: 1px solid #ccc;
+					box-sizing: border-box;
+					font-weight: 500px;
+				}
+				.row{
+					@include setHeight(50px);
+					.name{ float: left; width: 40%; }
+					.guests{ float: left; width: 25%; }
+					.total{ float: left; width: 25%; }
+					.delete{ float: left; width: 10%; }
+				}
+			}
+		}
+		@media (max-width: 800px){
+			.left, .right{ width: 100%; }
 		}
 	}

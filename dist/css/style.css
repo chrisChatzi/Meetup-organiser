@@ -53,6 +53,7 @@ input, select {
   border-radius: 4px;
   border: 1px solid #ddd;
   box-sizing: border-box;
+  box-sizing: border-box;
   background: #f2f2f5;
   color: #242428;
   text-align: center; }
@@ -65,6 +66,7 @@ textarea {
   resize: none;
   border-radius: 4px;
   border: 1px solid #ddd;
+  box-sizing: border-box;
   box-sizing: border-box;
   background: #f2f2f5;
   color: #242428; }
@@ -118,5 +120,92 @@ button {
   .main .eventItem .part, .main .eventItem .total {
     float: left;
     width: 50%; }
+
+/*EVENT NEW*/
+.event .left {
+  float: left;
+  width: 40%; }
+  .event .left .general {
+    height: 250px;
+    line-height: 250px;
+    padding-bottom: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 98%;
+    margin: 10px 1%; }
+    .event .left .general .head {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      font-weight: 500px; }
+    .event .left .general .row {
+      height: 50px;
+      line-height: 50px; }
+      .event .left .general .row .label {
+        float: left;
+        width: 40%; }
+      .event .left .general .row .val {
+        float: left;
+        width: 60%; }
+  .event .left .total {
+    height: 105px;
+    line-height: 105px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 98%;
+    margin: 10px 1%; }
+    .event .left .total .head {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      font-weight: 500px; }
+    .event .left .total .row {
+      height: 60px;
+      line-height: 60px; }
+      .event .left .total .row .block {
+        float: left;
+        width: 50%; }
+        .event .left .total .row .block .top {
+          height: 25px;
+          line-height: 25px; }
+        .event .left .total .row .block .bot {
+          height: 35px;
+          line-height: 35px; }
+
+.event .right {
+  float: left;
+  width: 60%; }
+  .event .right .list {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 98%;
+    margin: 10px 1%; }
+    .event .right .list .head {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      font-weight: 500px; }
+    .event .right .list .row {
+      height: 50px;
+      line-height: 50px; }
+      .event .right .list .row .name {
+        float: left;
+        width: 40%; }
+      .event .right .list .row .guests {
+        float: left;
+        width: 25%; }
+      .event .right .list .row .total {
+        float: left;
+        width: 25%; }
+      .event .right .list .row .delete {
+        float: left;
+        width: 10%; }
+
+@media (max-width: 800px) {
+  .event .left, .event .right {
+    width: 100%; } }
 
 /*# sourceMappingURL=style.css.map */
