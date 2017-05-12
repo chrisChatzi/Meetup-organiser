@@ -25360,7 +25360,7 @@ var route = exports.route = function route(path) {
     };
 };
 
-},{"./general/logic.js":258}],254:[function(require,module,exports){
+},{"./general/logic.js":259}],254:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25373,15 +25373,35 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Contact = function Contact() {
+var EventItem = function EventItem(_ref) {
+	var event = _ref.event;
 	return _react2.default.createElement(
 		"div",
-		{ className: "event" },
-		"event"
+		{ className: "eventItem" },
+		_react2.default.createElement(
+			"div",
+			{ className: "row name" },
+			event.name
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "row type" },
+			event.type
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "row part" },
+			event.part + "/" + event.max
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "row total" },
+			event.total
+		)
 	);
 };
 
-exports.default = Contact;
+exports.default = EventItem;
 
 },{"react":228}],255:[function(require,module,exports){
 "use strict";
@@ -25396,17 +25416,76 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Main = function Main() {
+var Event = function Event() {
 	return _react2.default.createElement(
 		"div",
-		{ className: "main" },
-		"main"
+		{ className: "event" },
+		"event"
+	);
+};
+
+exports.default = Event;
+
+},{"react":228}],256:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _EventItem = require('./EventItem.js');
+
+var _EventItem2 = _interopRequireDefault(_EventItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Main = function Main(_ref) {
+	var events = _ref.events,
+	    totalCost = _ref.totalCost,
+	    createEvent = _ref.createEvent;
+	return _react2.default.createElement(
+		'div',
+		{ className: 'main' },
+		_react2.default.createElement(
+			'div',
+			{ className: 'header' },
+			_react2.default.createElement(
+				'div',
+				{ className: 'num item' },
+				"Events: " + events.length
+			),
+			_react2.default.createElement(
+				'div',
+				{ className: 'new item' },
+				_react2.default.createElement(
+					'button',
+					{ onClick: createEvent },
+					'Create event'
+				)
+			),
+			_react2.default.createElement(
+				'div',
+				{ className: 'total item' },
+				"Total cost: " + totalCost
+			)
+		),
+		events.length > 0 ? events.map(function (v, i) {
+			return _react2.default.createElement(_EventItem2.default, { event: v, key: i });
+		}) : _react2.default.createElement(
+			'div',
+			{ className: 'none' },
+			'There are not any events yet'
+		)
 	);
 };
 
 exports.default = Main;
 
-},{"react":228}],256:[function(require,module,exports){
+},{"./EventItem.js":254,"react":228}],257:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25421,9 +25500,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-var _Event = require('../components/Event.js');
+var _EventNew = require('../components/EventNew.js');
 
-var _Event2 = _interopRequireDefault(_Event);
+var _EventNew2 = _interopRequireDefault(_EventNew);
 
 require('../actions.js');
 
@@ -25442,9 +25521,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 function mapStateToProps(state) {
-	return {
-		lang: state.main.lang
-	};
+	return {};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -25466,23 +25543,23 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-var Contact = function (_Component) {
-	_inherits(Contact, _Component);
+var EventNew = function (_Component) {
+	_inherits(EventNew, _Component);
 
-	_createClass(Contact, null, [{
+	_createClass(EventNew, null, [{
 		key: 'propTypes',
 		get: function get() {
 			return {};
 		}
 	}]);
 
-	function Contact(props) {
-		_classCallCheck(this, Contact);
+	function EventNew(props) {
+		_classCallCheck(this, EventNew);
 
-		return _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).call(this, props));
+		return _possibleConstructorReturn(this, (EventNew.__proto__ || Object.getPrototypeOf(EventNew)).call(this, props));
 	}
 
-	_createClass(Contact, [{
+	_createClass(EventNew, [{
 		key: 'componentDidMount',
 		value: function componentDidMount(e) {}
 	}, {
@@ -25491,17 +25568,17 @@ var Contact = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_Event2.default, null)
+				_react2.default.createElement(_EventNew2.default, null)
 			);
 		}
 	}]);
 
-	return Contact;
+	return EventNew;
 }(_react.Component);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Contact);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EventNew);
 
-},{"../actions.js":253,"../components/Event.js":254,"../history.js":259,"react":228,"react-redux":176}],257:[function(require,module,exports){
+},{"../actions.js":253,"../components/EventNew.js":255,"../history.js":260,"react":228,"react-redux":176}],258:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25537,7 +25614,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 function mapStateToProps(state) {
-	return {};
+	return {
+		events: state.main.events,
+		totalCost: state.main.totalCost
+	};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -25572,22 +25652,33 @@ var Main = function (_Component) {
 	function Main(props) {
 		_classCallCheck(this, Main);
 
-		return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+		_this.createEvent = _this.createEventHandler.bind(_this);
+		return _this;
 	}
 
 	_createClass(Main, [{
 		key: 'componentDidMount',
 		value: function componentDidMount(e) {}
 	}, {
-		key: 'componentWillUnmount',
-		value: function componentWillUnmount() {}
+		key: 'createEventHandler',
+		value: function createEventHandler() {
+			_history2.default.push("/event");
+		}
 	}, {
 		key: 'render',
 		value: function render() {
+			var _props = this.props,
+			    events = _props.events,
+			    totalCost = _props.totalCost;
+			var createEvent = this.createEvent;
+
+
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_Main2.default, null)
+				_react2.default.createElement(_Main2.default, { events: events, totalCost: totalCost, createEvent: createEvent })
 			);
 		}
 	}]);
@@ -25597,10 +25688,10 @@ var Main = function (_Component) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Main);
 
-},{"../actions.js":253,"../components/Main.js":255,"../history.js":259,"react":228,"react-redux":176}],258:[function(require,module,exports){
+},{"../actions.js":253,"../components/Main.js":256,"../history.js":260,"react":228,"react-redux":176}],259:[function(require,module,exports){
 "use strict";
 
-},{}],259:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25615,7 +25706,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createBrowserHistory2.default)();
 
-},{"history/createBrowserHistory":27}],260:[function(require,module,exports){
+},{"history/createBrowserHistory":27}],261:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -25640,9 +25731,9 @@ var _Main = require('./routes/Main');
 
 var _Main2 = _interopRequireDefault(_Main);
 
-var _Event = require('./routes/Event');
+var _EventNew = require('./routes/EventNew');
 
-var _Event2 = _interopRequireDefault(_Event);
+var _EventNew2 = _interopRequireDefault(_EventNew);
 
 var _redux = require('redux');
 
@@ -25666,24 +25757,25 @@ function desktop() {
 				'div',
 				null,
 				_react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', component: _Main2.default }),
-				_react2.default.createElement(_reactRouter.Route, { exact: true, path: '/event', component: Event })
+				_react2.default.createElement(_reactRouter.Route, { exact: true, path: '/event', component: _EventNew2.default })
 			)
 		)
 	), document.getElementById('app'));
 }
 
-},{"./history.js":259,"./reducers":262,"./routes/Event":264,"./routes/Main":265,"react":228,"react-dom":41,"react-redux":176,"react-router":199,"redux":235,"redux-thunk":229}],261:[function(require,module,exports){
+},{"./history.js":260,"./reducers":263,"./routes/EventNew":265,"./routes/Main":266,"react":228,"react-dom":41,"react-redux":176,"react-router":199,"redux":235,"redux-thunk":229}],262:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var main = {
-	events: [] };
+	events: [], //array of events
+	totalCost: 0 };
 
 exports.default = { main: main };
 
-},{}],262:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25704,7 +25796,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./main":263,"redux":235}],263:[function(require,module,exports){
+},{"./main":264,"redux":235}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25739,7 +25831,7 @@ var state_update = function state_update() {
 
 exports.default = state_update;
 
-},{"../history.js":259,"../initialState":261}],264:[function(require,module,exports){
+},{"../history.js":260,"../initialState":262}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25750,9 +25842,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Event = require('../containers/Event');
+var _EventNew = require('../containers/EventNew');
 
-var _Event2 = _interopRequireDefault(_Event);
+var _EventNew2 = _interopRequireDefault(_EventNew);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25760,13 +25852,13 @@ var Contact = function Contact() {
 	return _react2.default.createElement(
 		'div',
 		null,
-		_react2.default.createElement(_Event2.default, null)
+		_react2.default.createElement(_EventNew2.default, null)
 	);
 };
 
 exports.default = Contact;
 
-},{"../containers/Event":256,"react":228}],265:[function(require,module,exports){
+},{"../containers/EventNew":257,"react":228}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25793,4 +25885,4 @@ var Main = function Main() {
 
 exports.default = Main;
 
-},{"../containers/Main":257,"react":228}]},{},[260]);
+},{"../containers/Main":258,"react":228}]},{},[261]);

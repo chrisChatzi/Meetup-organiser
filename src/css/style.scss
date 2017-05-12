@@ -70,7 +70,7 @@ $font: 'christos', Serif;
 		overflow-x: hidden;
 		text-align: center;
 		background: #f5f5f5;
-		color: #fff;
+		color: #242428;
 		-ms-touch-action: manipulation;
 		touch-action: manipulation;
 		-webkit-background-size: cover;
@@ -126,4 +126,42 @@ $font: 'christos', Serif;
 		border: 0;
 		border-radius: 4px;
 		&:hover{ opacity: 0.75; }
+	}
+
+/*MAIN*/
+	.main{
+		.header{
+			@include setDims("", 100%, 50px, "", "");
+			border-bottom: 1px solid #ccc;
+			.item{
+				float: left;
+				width: 33%;
+			}
+			.num{
+				
+			}
+			.new{
+
+			}
+			.total{
+
+			}
+		}
+		.none{ margin: 20px 0; }
+		.eventItem{
+			@include setDims(left, 31%, 130px, 10px 1%, 5px 10px);
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+			.row{ @include setHeight(40px); }
+			.name{
+				
+			}
+			.type{
+				color: #777;
+			}
+			.part, .total{
+				float: left;
+				width: 50%;
+			}
+		}
 	}

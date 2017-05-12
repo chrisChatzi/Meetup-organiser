@@ -6,7 +6,7 @@ import { Route, Router, browserHistory } from 'react-router';
 import history from './history.js'
 
 import Main from './routes/Main'
-import Contact from './routes/Event'
+import EventNew from './routes/EventNew'
 
 import { createStore, applyMiddleware } from 'redux'
 import reducer from './reducers'
@@ -22,7 +22,7 @@ function desktop(){
 		<Provider store={store}>
 			<Router history={history}><div>
 				<Route exact path='/' component={Main} />
-				<Route exact path='/event' component={Event} />
+				<Route exact path='/event' component={EventNew} />
 			</div></Router>
 		</Provider>,
 		document.getElementById('app')

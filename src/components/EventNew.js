@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-const Contact = (  ) => (
+const Event = (  ) => (
 	<div className="event">
 		event
 	</div>
 )
 
-export default Contact
+export default Event

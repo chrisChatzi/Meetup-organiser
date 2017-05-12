@@ -10,7 +10,8 @@ import history from '../history.js'
 
 function mapStateToProps(state) {
 	return {
-
+		events : state.main.events,
+		totalCost : state.main.totalCost,
 	};
 }
 
@@ -32,19 +33,25 @@ class Main extends Component {
 
 	constructor(props) {
 		super(props);
+
+		this.createEvent = this.createEventHandler.bind(this)
 	}
 
 	componentDidMount(e) {
 
 	}
-	componentWillUnmount() {
-		
+	
+	createEventHandler(){
+		history.push("/event");
 	}
 
 	render() {	
+		let { events, totalCost } = this.props
+		let { createEvent } = this
+
 		return (
 			<div>
-				<MainC />
+				<MainC events={events} totalCost={totalCost} createEvent={createEvent} />
 			</div>
 		)
 	}

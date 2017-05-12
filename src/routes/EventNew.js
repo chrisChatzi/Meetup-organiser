@@ -1,9 +1,9 @@
 import React from 'react'
-import Event from '../containers/Event'
+import EventNew from '../containers/EventNew'
 
 const Contact = () => (
 	<div>
-		<Event />
+		<EventNew />
 	</div>
 )
 

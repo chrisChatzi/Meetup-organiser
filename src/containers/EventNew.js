@@ -4,13 +4,13 @@
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import EventC from '../components/Event.js'
+import EventC from '../components/EventNew.js'
 import {  } from '../actions.js'
 import history from '../history.js'
 
 function mapStateToProps(state) {
 	return {
-		lang : state.main.lang
+		
 	};
 }
 
@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-class Contact extends Component {
+class EventNew extends Component {
 	static get propTypes() {
 		return {
 
@@ -47,4 +47,4 @@ class Contact extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(EventNew);
