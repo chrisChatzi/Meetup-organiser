@@ -18,7 +18,9 @@ const Main = ( { state, events, totalCost, createEvent, clickEvent, delEvent, fi
 				event={v} open={(e)=>clickEvent(e, i)} del={()=>delEvent(i)} key={i} />
 		) : <div className="none">There are not any events yet</div> }
 	{/* add new */}
-		<div className="addItem" onClick={createEvent}><i className="fa fa-plus"></i></div>
+		<div className="addItem" onClick={createEvent} title="Add new event">
+			<i className="fa fa-plus"></i>
+		</div>
 	</div>
 )
 

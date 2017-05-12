@@ -25695,7 +25695,7 @@ var Event = function Event(_ref) {
 		),
 		_react2.default.createElement(
 			"div",
-			{ className: "addItem", onClick: save },
+			{ className: "addItem", onClick: save, title: "Save event" },
 			_react2.default.createElement("i", { className: "fa fa-floppy-o" })
 		)
 	);
@@ -25765,7 +25765,7 @@ var Main = function Main(_ref) {
 		),
 		_react2.default.createElement(
 			'div',
-			{ className: 'addItem', onClick: createEvent },
+			{ className: 'addItem', onClick: createEvent, title: 'Add new event' },
 			_react2.default.createElement('i', { className: 'fa fa-plus' })
 		)
 	);

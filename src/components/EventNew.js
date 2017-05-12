@@ -94,7 +94,9 @@ const Event = ( { state, goBack, save, general, add,
 				</div>
 			</div>
 		</div>
-	<div className="addItem" onClick={save}><i className="fa fa-floppy-o"></i></div>
+	<div className="addItem" onClick={save} title="Save event">
+		<i className="fa fa-floppy-o"></i>
+	</div>
 	</div>
 )
 

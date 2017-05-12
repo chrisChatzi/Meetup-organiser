@@ -147,6 +147,7 @@ $font: 'christos', Serif;
 		.item{
 			float: left;
 			width: 33%;
+			color: #c99e10;
 		}
 	}
 	.boxHead{
@@ -189,6 +190,7 @@ $font: 'christos', Serif;
 			@include setColors(#242428, #fff);
 			box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
 			border: 1px solid #ccc;
+			box-sizing: border-box;
 			cursor: pointer;
 			&:hover{
 				border-color: #aaa;
