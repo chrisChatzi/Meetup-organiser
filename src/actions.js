@@ -1,8 +1,16 @@
 import { } from './general/logic.js'
 
-export const route = (path) => {
+//add new event
+export const add_event = (event) => {
     return {
-        type: "ROUTE",
-        path
+        type: "ADD_EVENT",
+        event
+    };
+};
+//event to edit
+export const event_to_edit = (event) => {
+    return {
+        type: "EVENT_EDIT",
+        event
     };
 };

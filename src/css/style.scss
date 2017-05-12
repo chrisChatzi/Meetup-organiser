@@ -259,6 +259,9 @@ $font: 'christos', Serif;
 					.total{ float: left; width: 25%; }
 					.delete{ float: left; width: 10%; }
 				}
+				.error{
+					background: #fcc;
+				}
 			}
 		}
 		@media (max-width: 800px){

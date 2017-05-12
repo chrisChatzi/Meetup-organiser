@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import EventItem from './EventItem.js'
 
-const Main = ( { events, totalCost, createEvent } ) => (
+const Main = ( { events, totalCost, createEvent, clickEvent } ) => (
 	<div className="main">
 	{/* header */}
 		<div className="header">
@@ -14,7 +14,7 @@ const Main = ( { events, totalCost, createEvent } ) => (
 	{/* events */}
 		{(events.length > 0) ? 
 			events.map( (v,i) =>
-			<EventItem event={v} key={i} />
+			<EventItem event={v} open={()=>clickEvent(i)} key={i} />
 		) : <div className="none">There are not any events yet</div> }
 	</div>
 )

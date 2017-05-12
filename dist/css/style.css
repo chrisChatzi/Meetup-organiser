@@ -223,6 +223,8 @@ button {
       .event .right .list .row .delete {
         float: left;
         width: 10%; }
+    .event .right .list .error {
+      background: #fcc; }
 
 @media (max-width: 800px) {
   .event .left, .event .right {

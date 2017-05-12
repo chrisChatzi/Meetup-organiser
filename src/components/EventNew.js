@@ -23,14 +23,16 @@ const Event = ( { state, goBack, save, general, add,
 				<div className="row">
 					<div className="label">Name</div>
 					<div className="val">
-						<input value={state.name} placeholder="Name of event"
+						<input className={(state.nameCheck) ? "error" : ""}
+							value={state.name} placeholder="Name of event"
 							onChange={(e)=>general(e, "name")} />
 					</div>
 				</div>
 				<div className="row">
 					<div className="label">Type</div>
 					<div className="val">
-						<select defaultValue={state.type}  onChange={(e)=>general(e, "type")}>
+						<select className={(state.typeCheck) ? "error" : ""}
+							defaultValue={state.type}  onChange={(e)=>general(e, "type")}>
 							<option value="default">Choose type</option>
 							<option value="meeting">Meeting</option>
 							<option value="birthday">Birthday</option>
@@ -84,10 +86,12 @@ const Event = ( { state, goBack, save, general, add,
 					<div className="row" key={i}>
 						<div className="index">{(i+1)}</div>
 						<div className="name">
-							<input value={v.name} placeholder="Name" onChange={(e)=>partName(e, i)} />
+							<input className={(state.partNameChecks[i]) ? "error" : ""}
+								value={v.name} placeholder="Name" onChange={(e)=>partName(e, i)} />
 						</div>
 						<div className="guests">
-							<input value={v.guests} placeholder="Guests" onChange={(e)=>partGuests(e, i)} />
+							<input className={(state.partGuestsChecks[i]) ? "error" : ""}
+								value={v.guests} placeholder="Guests" onChange={(e)=>partGuests(e, i)} />
 						</div>
 						<div className="total">{v.total} &euro;</div>
 						<div className="delete" onClick={()=>partDel(i)}>

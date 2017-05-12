@@ -4,8 +4,25 @@ import history from '../history.js'
 const state_update = (state = init.main, action) => {
 	let newstate = Object.assign({}, state);
 	switch (action.type) {
-		case "ROUTE": {
+		case "ADD_EVENT": {
+			let array = newstate.events;
+			let error = false;
+			for(let i=0; i<array.length; i++){
+				if(array[i].name == action.event.name){
+					alert("An event with that name already exists");
+					error = true;
+				}
+			}
+			if(!error){
+				array.push(action.event);
+				history.push("/")
+			}
 			newstate.path = action.path
+			return newstate
+		}
+		case "EVENT_EDIT": {
+			newstate.eventOnEdit = action.event;
+			history.push("/event");
 			return newstate
 		}
 		default:
