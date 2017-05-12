@@ -130,13 +130,13 @@ $font: 'christos', Serif;
 		0% { transform: translate(-$slideNum); }
 		100% { transform: translate(0); }
 	}
-	@keyframes slideDown{
-		0% { transform: translate(0, -$slideNum); }
-		100% { transform: translate(0, 0); }
+	@keyframes slideLeft{
+		0% { transform: translate(-$slideNum); }
+		100% { transform: translate(0); }
 	}
-	@keyframes slideUp{
-		0% { transform: translate(0, $slideNum); }
-		100% { transform: translate(0, 0); }
+	@keyframes slideRight{
+		0% { transform: translate($slideNum); }
+		100% { transform: translate(0); }
 	}
 
 /*reused classes*/
@@ -156,6 +156,25 @@ $font: 'christos', Serif;
 		font-size: 18px;
 		color: #763626;
 	}
+	.editBox{
+		@include setBorders("", 1px solid #ccc);
+		background: #fff;
+		width: 98%;
+		margin: 10px 1%;
+		box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
+	}
+	.addItem{
+		@include setAbsolute(auto, 10px, ayto, 10px, 45px, 45px);
+		position: fixed;
+		border-radius: 45px;
+		@include setColors(#fff, #336b87);
+		box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
+		cursor: pointer;
+		&:hover{
+			box-shadow: none;
+			opacity: 0.8;
+		}
+	}
 
 /*MAIN*/
 	.main{
@@ -169,11 +188,10 @@ $font: 'christos', Serif;
 			@include setDims(left, 31%, 110px, 10px 1%, 0 10px);
 			@include setColors(#242428, #fff);
 			box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
-			box-sizing: border-box;
+			border: 1px solid #ccc;
 			cursor: pointer;
 			&:hover{
-				box-shadow: none;
-				border: 1px solid #ccc;
+				border-color: #aaa;
 			}
 			.row{ @include setHeight(40px); }
 			.name{
@@ -217,10 +235,7 @@ $font: 'christos', Serif;
 			.general{
 				@include setHeight(250px);
 				padding-bottom: 10px;
-				@include setBorders("", 1px solid #ccc);
-				background: #fff;
-				width: 98%;
-				margin: 10px 1%;
+				@extend .editBox;
 				.head{
 					@extend .boxHead;
 				}
@@ -239,30 +254,6 @@ $font: 'christos', Serif;
 					}
 				}
 			}
-			.total{
-				@include setHeight(105px);
-				@include setBorders("", 1px solid #ccc);
-				background: #fff;
-				width: 98%;
-				margin: 10px 1%;
-				.head{
-					@extend .boxHead;
-				}
-				.row{
-					@include setHeight(60px);
-					.block{
-						float: left;
-						width: 50%;
-						.top{
-							@include setHeight(25px);
-						}
-						.bot{
-							@include setHeight(35px);
-							font-size: 20px;
-						}
-					}
-				}
-			}
 		}
 		.right{
 			float: left;
@@ -270,9 +261,7 @@ $font: 'christos', Serif;
 			overflow: hidden;
 			.list{
 				@include setBorders("", 1px solid #ccc);
-				background: #fff;
-				width: 98%;
-				margin: 10px 1%;
+				@extend .editBox;
 				.head{
 					@extend .boxHead;
 				}

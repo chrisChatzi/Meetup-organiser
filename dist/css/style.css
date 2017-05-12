@@ -97,17 +97,17 @@ button {
   100% {
     transform: translate(0); } }
 
-@keyframes slideDown {
+@keyframes slideLeft {
   0% {
-    transform: translate(0, -50px); }
+    transform: translate(-50px); }
   100% {
-    transform: translate(0, 0); } }
+    transform: translate(0); } }
 
-@keyframes slideUp {
+@keyframes slideRight {
   0% {
-    transform: translate(0, 50px); }
+    transform: translate(50px); }
   100% {
-    transform: translate(0, 0); } }
+    transform: translate(0); } }
 
 /*reused classes*/
 .headerClass, .main .header, .event .header {
@@ -122,13 +122,40 @@ button {
     float: left;
     width: 33%; }
 
-.boxHead, .event .left .general .head, .event .left .total .head, .event .right .list .head {
+.boxHead, .event .left .general .head, .event .right .list .head {
   height: 40px;
   line-height: 40px;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
   font-size: 18px;
   color: #763626; }
+
+.editBox, .event .left .general, .event .right .list {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background: #fff;
+  width: 98%;
+  margin: 10px 1%;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25); }
+
+.addItem {
+  position: absolute;
+  top: auto;
+  bottom: 10px;
+  left: ayto;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  position: fixed;
+  border-radius: 45px;
+  background: #336b87;
+  color: #fff;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer; }
+  .addItem:hover {
+    box-shadow: none;
+    opacity: 0.8; }
 
 /*MAIN*/
 .main .none {
@@ -146,11 +173,10 @@ button {
   background: #fff;
   color: #242428;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
+  border: 1px solid #ccc;
   cursor: pointer; }
   .main .eventItem:hover {
-    box-shadow: none;
-    border: 1px solid #ccc; }
+    border-color: #aaa; }
   .main .eventItem .row {
     height: 40px;
     line-height: 40px; }
@@ -192,12 +218,7 @@ button {
   .event .left .general {
     height: 250px;
     line-height: 250px;
-    padding-bottom: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    background: #fff;
-    width: 98%;
-    margin: 10px 1%; }
+    padding-bottom: 10px; }
     .event .left .general .row {
       height: 50px;
       line-height: 50px; }
@@ -209,27 +230,6 @@ button {
         width: 60%; }
       .event .left .general .row .error {
         background: #fcc; }
-  .event .left .total {
-    height: 105px;
-    line-height: 105px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    background: #fff;
-    width: 98%;
-    margin: 10px 1%; }
-    .event .left .total .row {
-      height: 60px;
-      line-height: 60px; }
-      .event .left .total .row .block {
-        float: left;
-        width: 50%; }
-        .event .left .total .row .block .top {
-          height: 25px;
-          line-height: 25px; }
-        .event .left .total .row .block .bot {
-          height: 35px;
-          line-height: 35px;
-          font-size: 20px; }
 
 .event .right {
   float: left;
@@ -237,10 +237,7 @@ button {
   overflow: hidden; }
   .event .right .list {
     border: 1px solid #ccc;
-    box-sizing: border-box;
-    background: #fff;
-    width: 98%;
-    margin: 10px 1%; }
+    box-sizing: border-box; }
     .event .right .list .rowHead {
       font-weight: bold;
       border-bottom: 1px solid #ddd;

@@ -36,9 +36,12 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = { filter : "" }
+
 		this.createEvent = this.createEventHandler.bind(this);
 		this.clickEvent = this.clickEventHandler.bind(this);
 		this.delEvent = this.delEventHandler.bind(this);
+		this.filter = this.filterHandler.bind(this);
 	}
 
 	componentDidMount(e) {
@@ -64,14 +67,18 @@ class Main extends Component {
 		let r = confirm("Delete event?");
 		if(r) this.props.delEvent(this.props.events[i])
 	}
+	//filter
+	filterHandler(e){
+		this.setState({filter : e.target.value})
+	}
 
 	render() {	
 		let { events, totalCost } = this.props
-		let { createEvent, clickEvent, delEvent } = this
-
+		let { createEvent, clickEvent, delEvent, filter } = this
+		
 		return (
 			<div>
-				<MainC state={this.state} events={events} totalCost={totalCost} 
+				<MainC state={this.state} events={events} totalCost={totalCost} filter={filter}
 					createEvent={createEvent} clickEvent={clickEvent} delEvent={delEvent} />
 			</div>
 		)

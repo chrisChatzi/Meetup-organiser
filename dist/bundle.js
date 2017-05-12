@@ -25392,12 +25392,13 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EventItem = function EventItem(_ref) {
-	var event = _ref.event,
+	var show = _ref.show,
+	    event = _ref.event,
 	    open = _ref.open,
 	    del = _ref.del;
 	return _react2.default.createElement(
 		"div",
-		{ className: "eventItem", onClick: open },
+		{ className: "eventItem", onClick: open, style: { display: show } },
 		_react2.default.createElement(
 			"div",
 			{ className: "row name" },
@@ -25471,63 +25472,20 @@ var Event = function Event(_ref) {
 			_react2.default.createElement(
 				"div",
 				{ className: "new item" },
-				"\xA0"
+				"Participants: ",
+				state.participants.length
 			),
 			_react2.default.createElement(
 				"div",
 				{ className: "total item" },
-				_react2.default.createElement(
-					"button",
-					{ onClick: save },
-					"Save"
-				)
+				"Total cost: ",
+				state.total,
+				" \u20AC"
 			)
 		),
 		_react2.default.createElement(
 			"div",
 			{ className: "left" },
-			_react2.default.createElement(
-				"div",
-				{ id: "total", className: "total" },
-				_react2.default.createElement(
-					"div",
-					{ className: "head" },
-					"Preview"
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "row" },
-					_react2.default.createElement(
-						"div",
-						{ className: "block" },
-						_react2.default.createElement(
-							"div",
-							{ className: "top" },
-							"Participants"
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "bot" },
-							state.participants.length
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "block" },
-						_react2.default.createElement(
-							"div",
-							{ className: "top" },
-							"Total cost"
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "bot" },
-							state.total,
-							" \u20AC"
-						)
-					)
-				)
-			),
 			_react2.default.createElement(
 				"div",
 				{ className: "general" },
@@ -25734,6 +25692,11 @@ var Event = function Event(_ref) {
 					)
 				)
 			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "addItem", onClick: save },
+			_react2.default.createElement("i", { className: "fa fa-floppy-o" })
 		)
 	);
 };
@@ -25763,7 +25726,8 @@ var Main = function Main(_ref) {
 	    totalCost = _ref.totalCost,
 	    createEvent = _ref.createEvent,
 	    clickEvent = _ref.clickEvent,
-	    delEvent = _ref.delEvent;
+	    delEvent = _ref.delEvent,
+	    filter = _ref.filter;
 	return _react2.default.createElement(
 		'div',
 		{ className: 'main' },
@@ -25772,17 +25736,13 @@ var Main = function Main(_ref) {
 			{ className: 'header' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'num item' },
-				"Events: " + events.length
+				{ className: 'item' },
+				_react2.default.createElement('input', { placeholder: 'Filter by name', value: state.filter, onChange: filter })
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'new item' },
-				_react2.default.createElement(
-					'button',
-					{ onClick: createEvent },
-					'Create event'
-				)
+				{ className: 'num item' },
+				"Events: " + events.length
 			),
 			_react2.default.createElement(
 				'div',
@@ -25792,7 +25752,8 @@ var Main = function Main(_ref) {
 			)
 		),
 		events.length > 0 ? events.map(function (v, i) {
-			return _react2.default.createElement(_EventItem2.default, { event: v, open: function open(e) {
+			return _react2.default.createElement(_EventItem2.default, { show: v.name.indexOf(state.filter) >= 0 ? "block" : "none",
+				event: v, open: function open(e) {
 					return clickEvent(e, i);
 				}, del: function del() {
 					return delEvent(i);
@@ -25801,6 +25762,11 @@ var Main = function Main(_ref) {
 			'div',
 			{ className: 'none' },
 			'There are not any events yet'
+		),
+		_react2.default.createElement(
+			'div',
+			{ className: 'addItem', onClick: createEvent },
+			_react2.default.createElement('i', { className: 'fa fa-plus' })
 		)
 	);
 };
@@ -25915,9 +25881,8 @@ var EventNew = function (_Component) {
 					document.getElementsByClassName("eventItem")[x].style.animation = anime;
 				})(i);
 			}
-			document.getElementsByClassName("general")[0].style.animation = "slideUp 0.75s 1 forwards";
-			document.getElementById("total").style.animation = "slideLeft 0.75s 1 forwards";
-			document.getElementsByClassName("list")[0].style.animation = "slideDown 0.75s 1 forwards";
+			document.getElementsByClassName("general")[0].style.animation = "slideLeft 0.75s 1 forwards";
+			document.getElementsByClassName("list")[0].style.animation = "slideRight 0.75s 1 forwards";
 		}
 
 		//go back
@@ -26182,9 +26147,12 @@ var Main = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
+		_this.state = { filter: "" };
+
 		_this.createEvent = _this.createEventHandler.bind(_this);
 		_this.clickEvent = _this.clickEventHandler.bind(_this);
 		_this.delEvent = _this.delEventHandler.bind(_this);
+		_this.filter = _this.filterHandler.bind(_this);
 		return _this;
 	}
 
@@ -26221,6 +26189,13 @@ var Main = function (_Component) {
 			var r = confirm("Delete event?");
 			if (r) this.props.delEvent(this.props.events[i]);
 		}
+		//filter
+
+	}, {
+		key: 'filterHandler',
+		value: function filterHandler(e) {
+			this.setState({ filter: e.target.value });
+		}
 	}, {
 		key: 'render',
 		value: function render() {
@@ -26229,13 +26204,14 @@ var Main = function (_Component) {
 			    totalCost = _props.totalCost;
 			var createEvent = this.createEvent,
 			    clickEvent = this.clickEvent,
-			    delEvent = this.delEvent;
+			    delEvent = this.delEvent,
+			    filter = this.filter;
 
 
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_Main2.default, { state: this.state, events: events, totalCost: totalCost,
+				_react2.default.createElement(_Main2.default, { state: this.state, events: events, totalCost: totalCost, filter: filter,
 					createEvent: createEvent, clickEvent: clickEvent, delEvent: delEvent })
 			);
 		}

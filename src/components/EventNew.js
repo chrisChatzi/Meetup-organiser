@@ -9,28 +9,14 @@ const Event = ( { state, goBack, save, general, add,
 				<button onClick={goBack}>Back</button>
 			</div>
 			<div className="new item">
-				&nbsp;
+				Participants: {state.participants.length}
 			</div>
 			<div className="total item">
-				<button onClick={save}>Save</button>
+				Total cost: {state.total} &euro;
 			</div>
 		</div>
 	{/*left side - name fee etc.*/}
 		<div className="left">
-		{/*review*/}
-			<div id="total" className="total">
-				<div className="head">Preview</div>
-				<div className="row">
-					<div className="block">
-						<div className="top">Participants</div>
-						<div className="bot">{state.participants.length}</div>
-					</div>
-					<div className="block">
-						<div className="top">Total cost</div>
-						<div className="bot">{state.total} &euro;</div>
-					</div>
-				</div>
-			</div>
 		{/*general info*/}
 			<div className="general">
 				<div className="head">General info</div>
@@ -108,6 +94,7 @@ const Event = ( { state, goBack, save, general, add,
 				</div>
 			</div>
 		</div>
+	<div className="addItem" onClick={save}><i className="fa fa-floppy-o"></i></div>
 	</div>
 )
 
