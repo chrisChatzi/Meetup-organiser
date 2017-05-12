@@ -67,7 +67,13 @@ class EventNew extends Component {
 	}
 
 	componentDidMount(e) {
-
+		for(let i=0; i<document.getElementsByClassName("eventItem").length; i++){
+			((x) => {
+				let delay = 0.1 * x;
+				let anime = "popup linear 0.5s "+delay+"s 1 forwards";
+				document.getElementsByClassName("eventItem")[x].style.animation = anime
+			})(i)
+		}
 	}
 
 	//go back
@@ -111,7 +117,7 @@ class EventNew extends Component {
 			this.setState({partNameChecks : arrNames, partGuestsChecks : arrGuests});
 		}
 		//check if max partitipants correct
-		if(this.state.max && this.state.participants.length >= this.state.max){
+		if(this.state.max && this.state.participants.length > this.state.max){
 			alert("Max number of participants fulfilled");
 			error = true;
 		}
@@ -162,28 +168,36 @@ class EventNew extends Component {
 	addHandler(){
 		let arr = this.state.participants;
 		let arrChecks = this.state.partNameChecks;
-		arr.push({name:"",guests:"",total:0});
-		arrChecks.push(false)
-		this.setState({participants : arr, partNameChecks : arrChecks, partGuestsChecks : arrChecks});
+		if(this.state.participants.length < this.state.max){
+			arr.push({name:"",guests:"",total:0});
+			arrChecks.push(false)
+			this.setState({participants : arr, partNameChecks : arrChecks, partGuestsChecks : arrChecks});
+		}else{
+			if(this.state.max) alert("Maximum number of participants has been reached");
+			else alert("Set a maximum number of participants first");
+		}
 	}
 	//delete participant
 	partDelHandler(i){
-		let arr = this.state.participants;
-		let arrNameChecks = this.state.partNameChecks;
-		let arrGuestsChecks = this.state.partGuestsChecks;
-		arr.splice(i, 1);
-		arrNameChecks.splice(i, 1);
-		arrGuestsChecks.splice(i, 1);
-		this.setState({
-			participants : arr, 
-			partNameChecks : arrNameChecks, 
-			partGuestsChecks :arrGuestsChecks
-		});
-		//calculate total cost of event
-		let total = 0;
-		for(let i=0; i<arr.length; i++)
-			total += arr[i].total;
-		this.setState({total});
+		let r = confirm("Delete participant?");
+		if(r){
+			let arr = this.state.participants;
+			let arrNameChecks = this.state.partNameChecks;
+			let arrGuestsChecks = this.state.partGuestsChecks;
+			arr.splice(i, 1);
+			arrNameChecks.splice(i, 1);
+			arrGuestsChecks.splice(i, 1);
+			this.setState({
+				participants : arr, 
+				partNameChecks : arrNameChecks, 
+				partGuestsChecks :arrGuestsChecks
+			});
+			//calculate total cost of event
+			let total = 0;
+			for(let i=0; i<arr.length; i++)
+				total += arr[i].total;
+			this.setState({total});
+		}
 	}
 	//change name of participant
 	partNameHandler(e, i){

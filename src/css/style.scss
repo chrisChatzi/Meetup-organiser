@@ -70,8 +70,7 @@ $font: 'christos', Serif;
 		overflow-y: auto;
 		overflow-x: hidden;
 		text-align: center;
-		background: #f5f5f5;
-		color: #242428;
+		@include setColors(#242428, #f5f5f5);
 		-ms-touch-action: manipulation;
 		touch-action: manipulation;
 		-webkit-background-size: cover;
@@ -129,41 +128,67 @@ $font: 'christos', Serif;
 		&:hover{ opacity: 0.75; }
 	}
 
+/*animations*/
+	@keyframes popup {
+		0% { transform: scale(0.25); opacity: 0; }
+		50% { transform: scale(0.50); opacity: 1; }
+		75% { transform: scale(0.75); }
+		100% { transform: scale(1); opacity: 1;}
+	}
+
+/*reused classes*/
+	.headerClass{
+		@include setDims("", 100%, 50px, 0 0 10px 0, "");
+		@include setColors(#fff, #2a3132);
+		box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.25);
+		.item{
+			float: left;
+			width: 33%;
+		}
+	}
+	.boxHead{
+		@include setHeight(40px);
+		border-bottom: 1px solid #ccc;
+		box-sizing: border-box;
+		font-size: 18px;
+		color: #763626;
+	}
+
 /*MAIN*/
 	.main{
 		.header{
-			@include setDims("", 100%, 50px, "", "");
-			border-bottom: 1px solid #ccc;
-			.item{
-				float: left;
-				width: 33%;
-			}
-			.num{
-				
-			}
-			.new{
-
-			}
-			.total{
-
-			}
+			@extend .headerClass;
 		}
 		.none{ margin: 20px 0; }
 		.eventItem{
+			opacity: 0;
+			transform: scale(0);
 			@include setDims(left, 31%, 110px, 10px 1%, 0 10px);
-			border: 1px solid #ccc;
-			box-sizing: border-box;
+			@include setColors(#242428, #fff);
+			box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
+			&:hover{
+				box-shadow: none;
+			}
 			.row{ @include setHeight(40px); }
 			.name{
-				/*@include setHeight()*/
+				color: #005792;
 			}
 			.type{
 				@include setHeight(30px);
 				color: #777;
 			}
-			.part, .total, delete{
+			.part, .total{
 				float: left;
-				width: 33.3%;
+				width: 50%;
+			}
+			.delete{
+				@include setAbsolute(5px, auto, auto, 5px, 20px, 20px);
+				color: #c0392b;
+				cursor: pointer;
+				&:hover{
+					transition: 0.8s;
+					opacity: 0.8;
+				}
 			}
 			@media (max-width: 900px){
 				width: 48%;
@@ -177,12 +202,7 @@ $font: 'christos', Serif;
 /*EVENT NEW*/
 	.event{
 		.header{
-			@include setDims("", 100%, 50px, "", "");
-			border-bottom: 1px solid #ccc;
-			.item{
-				float: left;
-				width: 33%;
-			}
+			@extend .headerClass;
 		}
 		.left{
 			float: left;
@@ -191,13 +211,11 @@ $font: 'christos', Serif;
 				@include setHeight(250px);
 				padding-bottom: 10px;
 				@include setBorders("", 1px solid #ccc);
+				background: #fff;
 				width: 98%;
 				margin: 10px 1%;
 				.head{
-					@include setHeight(40px);
-					border-bottom: 1px solid #ccc;
-					box-sizing: border-box;
-					font-weight: 500px;
+					@extend .boxHead;
 				}
 				.row{
 					@include setHeight(50px);
@@ -217,13 +235,11 @@ $font: 'christos', Serif;
 			.total{
 				@include setHeight(105px);
 				@include setBorders("", 1px solid #ccc);
+				background: #fff;
 				width: 98%;
 				margin: 10px 1%;
 				.head{
-					@include setHeight(40px);
-					border-bottom: 1px solid #ccc;
-					box-sizing: border-box;
-					font-weight: 500px;
+					@extend .boxHead;
 				}
 				.row{
 					@include setHeight(60px);
@@ -235,6 +251,7 @@ $font: 'christos', Serif;
 						}
 						.bot{
 							@include setHeight(35px);
+							font-size: 20px;
 						}
 					}
 				}
@@ -245,13 +262,11 @@ $font: 'christos', Serif;
 			width: 60%;
 			.list{
 				@include setBorders("", 1px solid #ccc);
+				background: #fff;
 				width: 98%;
 				margin: 10px 1%;
 				.head{
-					@include setHeight(40px);
-					border-bottom: 1px solid #ccc;
-					box-sizing: border-box;
-					font-weight: 500px;
+					@extend .boxHead;
 				}
 				.rowHead{
 					font-weight: bold;
@@ -264,7 +279,16 @@ $font: 'christos', Serif;
 					.name{ float: left; width: 45%; }
 					.guests{ float: left; width: 15%; input{width: 80px;} }
 					.total{ float: left; width: 25%; }
-					.delete{ float: left; width: 10%; }
+					.delete{
+						float: left; 
+						width: 10%; 
+						color: #c0392b; 
+						cursor: pointer; 
+						&:hover{
+							opacity: 0.8;
+							transition: 0.8s;
+						}
+					}
 				}
 				.error{
 					background: #fcc;

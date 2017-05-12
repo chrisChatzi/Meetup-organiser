@@ -1,5 +1,3 @@
-import { } from './general/logic.js'
-
 //add new event
 export const add_event = (event) => {
     return {

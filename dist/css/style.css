@@ -90,40 +90,85 @@ button {
   button:hover {
     opacity: 0.75; }
 
-/*MAIN*/
-.main .header {
+/*animations*/
+@keyframes popup {
+  0% {
+    transform: scale(0.25);
+    opacity: 0; }
+  50% {
+    transform: scale(0.5);
+    opacity: 1; }
+  75% {
+    transform: scale(0.75); }
+  100% {
+    transform: scale(1);
+    opacity: 1; } }
+
+/*reused classes*/
+.headerClass, .main .header, .event .header {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  border-bottom: 1px solid #ccc; }
-  .main .header .item {
+  margin: 0 0 10px 0;
+  background: #2a3132;
+  color: #fff;
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.25); }
+  .headerClass .item, .main .header .item, .event .header .item {
     float: left;
     width: 33%; }
 
+.boxHead, .event .left .general .head, .event .left .total .head, .event .right .list .head {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #763626; }
+
+/*MAIN*/
 .main .none {
   margin: 20px 0; }
 
 .main .eventItem {
+  opacity: 0;
+  transform: scale(0);
   float: left;
   width: 31%;
   height: 110px;
   line-height: 110px;
   margin: 10px 1%;
   padding: 0 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box; }
+  background: #fff;
+  color: #242428;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.25); }
+  .main .eventItem:hover {
+    box-shadow: none; }
   .main .eventItem .row {
     height: 40px;
     line-height: 40px; }
   .main .eventItem .name {
-    /*@include setHeight()*/ }
+    color: #005792; }
   .main .eventItem .type {
     height: 30px;
     line-height: 30px;
     color: #777; }
-  .main .eventItem .part, .main .eventItem .total, .main .eventItem delete {
+  .main .eventItem .part, .main .eventItem .total {
     float: left;
-    width: 33.3%; }
+    width: 50%; }
+  .main .eventItem .delete {
+    position: absolute;
+    top: 5px;
+    bottom: auto;
+    left: auto;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #c0392b;
+    cursor: pointer; }
+    .main .eventItem .delete:hover {
+      transition: 0.8s;
+      opacity: 0.8; }
   @media (max-width: 900px) {
     .main .eventItem {
       width: 48%; } }
@@ -132,15 +177,6 @@ button {
       width: 98%; } }
 
 /*EVENT NEW*/
-.event .header {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  border-bottom: 1px solid #ccc; }
-  .event .header .item {
-    float: left;
-    width: 33%; }
-
 .event .left {
   float: left;
   width: 40%; }
@@ -150,14 +186,9 @@ button {
     padding-bottom: 10px;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    background: #fff;
     width: 98%;
     margin: 10px 1%; }
-    .event .left .general .head {
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1px solid #ccc;
-      box-sizing: border-box;
-      font-weight: 500px; }
     .event .left .general .row {
       height: 50px;
       line-height: 50px; }
@@ -174,14 +205,9 @@ button {
     line-height: 105px;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    background: #fff;
     width: 98%;
     margin: 10px 1%; }
-    .event .left .total .head {
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1px solid #ccc;
-      box-sizing: border-box;
-      font-weight: 500px; }
     .event .left .total .row {
       height: 60px;
       line-height: 60px; }
@@ -193,7 +219,8 @@ button {
           line-height: 25px; }
         .event .left .total .row .block .bot {
           height: 35px;
-          line-height: 35px; }
+          line-height: 35px;
+          font-size: 20px; }
 
 .event .right {
   float: left;
@@ -201,14 +228,9 @@ button {
   .event .right .list {
     border: 1px solid #ccc;
     box-sizing: border-box;
+    background: #fff;
     width: 98%;
     margin: 10px 1%; }
-    .event .right .list .head {
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1px solid #ccc;
-      box-sizing: border-box;
-      font-weight: 500px; }
     .event .right .list .rowHead {
       font-weight: bold;
       border-bottom: 1px solid #ddd;
@@ -232,7 +254,12 @@ button {
         width: 25%; }
       .event .right .list .row .delete {
         float: left;
-        width: 10%; }
+        width: 10%;
+        color: #c0392b;
+        cursor: pointer; }
+        .event .right .list .row .delete:hover {
+          opacity: 0.8;
+          transition: 0.8s; }
     .event .right .list .error {
       background: #fcc; }
 

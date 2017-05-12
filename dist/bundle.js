@@ -25349,10 +25349,6 @@ module.exports = warning;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.event_to_edit = exports.del_event = exports.edit_event = exports.add_event = undefined;
-
-require("./general/logic.js");
-
 //add new event
 var add_event = exports.add_event = function add_event(event) {
     return {
@@ -25382,7 +25378,7 @@ var event_to_edit = exports.event_to_edit = function event_to_edit(event) {
     };
 };
 
-},{"./general/logic.js":259}],254:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25410,16 +25406,18 @@ var EventItem = function EventItem(_ref) {
 		_react2.default.createElement(
 			"div",
 			{ className: "row type" },
-			event.type
+			event.type.charAt(0).toUpperCase() + event.type.slice(1)
 		),
 		_react2.default.createElement(
 			"div",
 			{ className: "row part" },
-			event.participants.length + "/" + event.max
+			event.participants.length + "/" + event.max,
+			" participants"
 		),
 		_react2.default.createElement(
 			"div",
 			{ className: "row total" },
+			"Total: ",
 			event.total,
 			" \u20AC"
 		),
@@ -25894,7 +25892,15 @@ var EventNew = function (_Component) {
 
 	_createClass(EventNew, [{
 		key: 'componentDidMount',
-		value: function componentDidMount(e) {}
+		value: function componentDidMount(e) {
+			for (var i = 0; i < document.getElementsByClassName("eventItem").length; i++) {
+				(function (x) {
+					var delay = 0.1 * x;
+					var anime = "popup linear 0.5s " + delay + "s 1 forwards";
+					document.getElementsByClassName("eventItem")[x].style.animation = anime;
+				})(i);
+			}
+		}
 
 		//go back
 
@@ -25943,7 +25949,7 @@ var EventNew = function (_Component) {
 				this.setState({ partNameChecks: arrNames, partGuestsChecks: arrGuests });
 			}
 			//check if max partitipants correct
-			if (this.state.max && this.state.participants.length >= this.state.max) {
+			if (this.state.max && this.state.participants.length > this.state.max) {
 				alert("Max number of participants fulfilled");
 				error = true;
 			}
@@ -25998,31 +26004,38 @@ var EventNew = function (_Component) {
 		value: function addHandler() {
 			var arr = this.state.participants;
 			var arrChecks = this.state.partNameChecks;
-			arr.push({ name: "", guests: "", total: 0 });
-			arrChecks.push(false);
-			this.setState({ participants: arr, partNameChecks: arrChecks, partGuestsChecks: arrChecks });
+			if (this.state.participants.length < this.state.max) {
+				arr.push({ name: "", guests: "", total: 0 });
+				arrChecks.push(false);
+				this.setState({ participants: arr, partNameChecks: arrChecks, partGuestsChecks: arrChecks });
+			} else {
+				if (this.state.max) alert("Maximum number of participants has been reached");else alert("Set a maximum number of participants first");
+			}
 		}
 		//delete participant
 
 	}, {
 		key: 'partDelHandler',
 		value: function partDelHandler(i) {
-			var arr = this.state.participants;
-			var arrNameChecks = this.state.partNameChecks;
-			var arrGuestsChecks = this.state.partGuestsChecks;
-			arr.splice(i, 1);
-			arrNameChecks.splice(i, 1);
-			arrGuestsChecks.splice(i, 1);
-			this.setState({
-				participants: arr,
-				partNameChecks: arrNameChecks,
-				partGuestsChecks: arrGuestsChecks
-			});
-			//calculate total cost of event
-			var total = 0;
-			for (var _i = 0; _i < arr.length; _i++) {
-				total += arr[_i].total;
-			}this.setState({ total: total });
+			var r = confirm("Delete participant?");
+			if (r) {
+				var arr = this.state.participants;
+				var arrNameChecks = this.state.partNameChecks;
+				var arrGuestsChecks = this.state.partGuestsChecks;
+				arr.splice(i, 1);
+				arrNameChecks.splice(i, 1);
+				arrGuestsChecks.splice(i, 1);
+				this.setState({
+					participants: arr,
+					partNameChecks: arrNameChecks,
+					partGuestsChecks: arrGuestsChecks
+				});
+				//calculate total cost of event
+				var total = 0;
+				for (var _i = 0; _i < arr.length; _i++) {
+					total += arr[_i].total;
+				}this.setState({ total: total });
+			}
 		}
 		//change name of participant
 
@@ -26083,7 +26096,7 @@ var EventNew = function (_Component) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EventNew);
 
-},{"../actions.js":253,"../components/EventNew.js":255,"../history.js":260,"react":228,"react-redux":176}],258:[function(require,module,exports){
+},{"../actions.js":253,"../components/EventNew.js":255,"../history.js":259,"react":228,"react-redux":176}],258:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26119,6 +26132,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 function mapStateToProps(state) {
+	console.log(state.main.events);
 	return {
 		events: state.main.events,
 		totalCost: state.main.totalCost
@@ -26159,7 +26173,15 @@ var Main = function (_Component) {
 
 	_createClass(Main, [{
 		key: 'componentDidMount',
-		value: function componentDidMount(e) {}
+		value: function componentDidMount(e) {
+			for (var i = 0; i < document.getElementsByClassName("eventItem").length; i++) {
+				(function (x) {
+					var delay = 0.1 * x;
+					var anime = "popup linear 0.5s " + delay + "s 1 forwards";
+					document.getElementsByClassName("eventItem")[x].style.animation = anime;
+				})(i);
+			}
+		}
 		//create new event
 
 	}, {
@@ -26179,7 +26201,8 @@ var Main = function (_Component) {
 	}, {
 		key: 'delEventHandler',
 		value: function delEventHandler(i) {
-			this.props.delEvent(this.props.events[i]);
+			var r = confirm("Delete event?");
+			if (r) this.props.delEvent(this.props.events[i]);
 		}
 	}, {
 		key: 'render',
@@ -26206,10 +26229,7 @@ var Main = function (_Component) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Main);
 
-},{"../actions.js":253,"../components/Main.js":256,"../history.js":260,"react":228,"react-redux":176}],259:[function(require,module,exports){
-"use strict";
-
-},{}],260:[function(require,module,exports){
+},{"../actions.js":253,"../components/Main.js":256,"../history.js":259,"react":228,"react-redux":176}],259:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26224,7 +26244,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createBrowserHistory2.default)();
 
-},{"history/createBrowserHistory":27}],261:[function(require,module,exports){
+},{"history/createBrowserHistory":27}],260:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -26281,7 +26301,7 @@ function desktop() {
 	), document.getElementById('app'));
 }
 
-},{"./history.js":260,"./reducers":263,"./routes/EventNew":265,"./routes/Main":266,"react":228,"react-dom":41,"react-redux":176,"react-router":199,"redux":235,"redux-thunk":229}],262:[function(require,module,exports){
+},{"./history.js":259,"./reducers":262,"./routes/EventNew":264,"./routes/Main":265,"react":228,"react-dom":41,"react-redux":176,"react-router":199,"redux":235,"redux-thunk":229}],261:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26294,7 +26314,7 @@ var main = {
 
 exports.default = { main: main };
 
-},{}],263:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26315,7 +26335,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./main":264,"redux":235}],264:[function(require,module,exports){
+},{"./main":263,"redux":235}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26393,7 +26413,7 @@ var state_update = function state_update() {
 
 exports.default = state_update;
 
-},{"../history.js":260,"../initialState":262}],265:[function(require,module,exports){
+},{"../history.js":259,"../initialState":261}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26420,7 +26440,7 @@ var Contact = function Contact() {
 
 exports.default = Contact;
 
-},{"../containers/EventNew":257,"react":228}],266:[function(require,module,exports){
+},{"../containers/EventNew":257,"react":228}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26447,4 +26467,4 @@ var Main = function Main() {
 
 exports.default = Main;
 
-},{"../containers/Main":258,"react":228}]},{},[261]);
+},{"../containers/Main":258,"react":228}]},{},[260]);

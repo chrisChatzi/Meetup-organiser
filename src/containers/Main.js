@@ -5,10 +5,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MainC from '../components/Main.js'
-import { event_to_edit, del_event } from '../actions.js'
+import { get_events, event_to_edit, del_event } from '../actions.js'
 import history from '../history.js'
 
 function mapStateToProps(state) {
+	console.log(state.main.events)
 	return {
 		events : state.main.events,
 		totalCost : state.main.totalCost,
@@ -42,7 +43,13 @@ class Main extends Component {
 	}
 
 	componentDidMount(e) {
-
+		for(let i=0; i<document.getElementsByClassName("eventItem").length; i++){
+			((x) => {
+				let delay = 0.1 * x;
+				let anime = "popup linear 0.5s "+delay+"s 1 forwards";
+				document.getElementsByClassName("eventItem")[x].style.animation = anime
+			})(i)
+		}
 	}
 	//create new event
 	createEventHandler(){
@@ -55,7 +62,8 @@ class Main extends Component {
 	}
 	//delete event
 	delEventHandler(i){
-		this.props.delEvent(this.props.events[i])
+		let r = confirm("Delete event?");
+		if(r) this.props.delEvent(this.props.events[i])
 	}
 
 	render() {	
