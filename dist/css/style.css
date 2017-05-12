@@ -45,6 +45,7 @@ html, body {
   background: #666; }
 
 input, select {
+  font-family: "christos", Serif;
   width: auto;
   height: 32px;
   line-height: 32px;

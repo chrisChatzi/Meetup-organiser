@@ -35,10 +35,10 @@ const Event = ( { state, goBack, save, general, add,
 							defaultValue={state.type}  onChange={(e)=>general(e, "type")}>
 							<option value="default">-- Choose type</option>
 							<option value="meeting">Meeting</option>
-							<option value="birthday">Birthday</option>
 							<option value="seminar">Seminar</option>
 							<option value="trade">Trade show</option>
 							<option value="awars">Awards</option>
+							<option value="birthday">Birthday</option>
 						</select>
 					</div>
 				</div>

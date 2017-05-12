@@ -25541,11 +25541,6 @@ var Event = function Event(_ref) {
 							),
 							_react2.default.createElement(
 								"option",
-								{ value: "birthday" },
-								"Birthday"
-							),
-							_react2.default.createElement(
-								"option",
 								{ value: "seminar" },
 								"Seminar"
 							),
@@ -25558,6 +25553,11 @@ var Event = function Event(_ref) {
 								"option",
 								{ value: "awars" },
 								"Awards"
+							),
+							_react2.default.createElement(
+								"option",
+								{ value: "birthday" },
+								"Birthday"
 							)
 						)
 					)

@@ -94,6 +94,7 @@ $font: 'christos', Serif;
 		background: #666; 
 	}
 	input, select{
+		font-family: $font;
 		@include setDims("", auto, 32px, 5px 0, 0 5px);
 		@include setBorders(4px, 1px solid #ddd);
 		box-sizing: border-box;
